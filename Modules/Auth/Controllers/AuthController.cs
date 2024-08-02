@@ -12,18 +12,19 @@ namespace onboarding_backend.Modules.Auth.Controllers
     public class AuthController(AuthService authService)
     {
         private readonly AuthService _authService = authService;
-        [HttpPost]
+        [HttpPost("login")]
         public async Task<ActionResult> Login()
         {
             return null;
 
         }
 
-        // [HttpPost]
-        // public Task<ActionResult> Register()
-        // {
-        //     return null;
-        // }
+        [HttpPost("register")]
+        public async Task<ActionResult> Register()
+        {
+            return null;
+
+        }
 
 
     }

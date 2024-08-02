@@ -20,5 +20,6 @@ namespace onboarding_backend.Database
         public DbSet<MovieTag> MovieTags { get; set; }
         public DbSet<MovieSchedule> MovieSchedules { get; set; }
         public DbSet<Movie> Movies { get; set; }
+
     }
 }

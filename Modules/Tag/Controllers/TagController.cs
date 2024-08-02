@@ -3,43 +3,60 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using onboarding_backend.Common.Responses;
+using onboarding_backend.Dtos.Tag;
+using onboarding_backend.Interfaces;
 using onboarding_backend.Modules.Tag.Services;
 
 namespace onboarding_backend.Modules.Tag.Controllers
 {
     [Route("api/tags")]
     [ApiController]
-    public class TagController(TagService tagService)
+    public class TagController(TagService tagService) : ControllerBase
     {
         private readonly TagService _tagService = tagService;
 
         [HttpGet]
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult<ApiResponse<PaginateResponse<ITag>>>> Index()
         {
-            return null;
+            var result = await _tagService.Pagination();
+            return new ApiResponse<PaginateResponse<ITag>>(data: result, success: true, message: "Success");
 
         }
 
         [HttpPost]
-        public Task<ActionResult> Create()
+        public async Task<ActionResult> Create([FromBody] TagCreateDto request)
         {
-            return null;
+            await _tagService.Create(request);
+            var response = new ApiResponse<string>(success: true, message: "Success");
+
+            return Ok(response);
+
         }
         [HttpGet("id")]
-        public Task<ActionResult> Detail(int id)
+        public async Task<ActionResult<ApiResponse<ITag>>> Detail(int id)
         {
-            return null;
-        }
-        [HttpDelete("id")]
-        public Task<ActionResult> Delete(int id)
-        {
-            return null;
-        }
-        [HttpPut("id")]
-        public Task<ActionResult> Update(int id)
-        {
-            return null;
-        }
+            var result = await _tagService.FindOne(id);
+            return new ApiResponse<ITag>(data: result, success: true, message: "Success");
 
+        }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var result = await _tagService.Delete(id);
+            if (!result) return NotFound();
+            var response = new ApiResponse<string>(success: true, message: "Success");
+
+            return Ok(response);
+        }
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(int id, [FromBody] TagUpdateDto request)
+        {
+            var result = await _tagService.Update(id, request);
+            if (!result) return BadRequest();
+            var response = new ApiResponse<string>(success: true, message: "Success");
+
+            return Ok(response);
+        }
     }
 }

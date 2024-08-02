@@ -25,7 +25,7 @@ namespace onboarding_backend.Modules.Movie.Services
 
         public async Task<bool> Delete(int id)
         {
-            var movie = await _movieRepository.FindOne(id);
+            var movie = await FindOne(id);
 
             if (movie is null) return false;
 
@@ -36,7 +36,7 @@ namespace onboarding_backend.Modules.Movie.Services
 
         public async Task<bool> Update(int id, MovieUpdateDto data)
         {
-            var movie = await _movieRepository.FindOne(id);
+            var movie = await FindOne(id);
 
             if (movie is null) return false;
 
@@ -44,5 +44,12 @@ namespace onboarding_backend.Modules.Movie.Services
 
             return true;
         }
+
+        public async Task<IMovie> FindOne(int id)
+        {
+            return await _movieRepository.FindOne(id);
+        }
+
+
     }
 }

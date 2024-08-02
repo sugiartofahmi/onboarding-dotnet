@@ -14,5 +14,10 @@ namespace onboarding_backend.Modules.Auth.Services
 
         }
 
+        public async Task Register()
+        {
+
+        }
+
     }
 }

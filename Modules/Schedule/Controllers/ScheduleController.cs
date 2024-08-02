@@ -3,42 +3,59 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using onboarding_backend.Common.Responses;
+using onboarding_backend.Dtos.Schedule;
+using onboarding_backend.Interfaces;
 using onboarding_backend.Modules.Schedule.Services;
 
 namespace onboarding_backend.Modules.Schedule.Controllers
 {
     [Route("api/schedules")]
     [ApiController]
-    public class ScheduleController(ScheduleService scheduleService)
+    public class ScheduleController(ScheduleService scheduleService) : ControllerBase
     {
         private readonly ScheduleService _scheduleService = scheduleService;
 
         [HttpGet]
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult<ApiResponse<PaginateResponse<IMovieSchedule>>>> Index()
         {
-            return null;
+            var result = await _scheduleService.Pagination();
+            return new ApiResponse<PaginateResponse<IMovieSchedule>>(data: result, success: true, message: "Success");
 
         }
 
         [HttpPost]
-        public Task<ActionResult> Create()
+        public async Task<ActionResult<ApiResponse<string>>> Create([FromBody] ScheduleCreateDto request)
         {
-            return null;
+            await _scheduleService.Create(request);
+            var response = new ApiResponse<string>(success: true, message: "Success");
+
+            return Ok(response);
+
         }
         [HttpGet("id")]
-        public Task<ActionResult> Detail(int id)
+        public async Task<ActionResult<ApiResponse<IMovieSchedule>>> Detail(int id)
         {
-            return null;
+            var result = await _scheduleService.FindOne(id);
+            return new ApiResponse<IMovieSchedule>(data: result, success: true, message: "Success");
         }
-        [HttpDelete("id")]
-        public Task<ActionResult> Delete(int id)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
         {
-            return null;
+            var result = await _scheduleService.Delete(id);
+            if (!result) return NotFound();
+            var response = new ApiResponse<string>(success: true, message: "Success");
+
+            return Ok(response);
         }
-        [HttpPut("id")]
-        public Task<ActionResult> Update(int id)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(int id, [FromBody] ScheduleUpdateDto request)
         {
-            return null;
+            var result = await _scheduleService.Update(id, request);
+            if (!result) return BadRequest();
+            var response = new ApiResponse<string>(success: true, message: "Success");
+
+            return Ok(response);
         }
     }
 }

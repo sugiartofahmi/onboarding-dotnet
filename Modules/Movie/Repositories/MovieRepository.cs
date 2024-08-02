@@ -27,7 +27,7 @@ namespace onboarding_backend.Modules.Movie.Repositories
 
 
 
-        public async Task<Database.Entities.Movie?> FindOne(int id)
+        public async Task<IMovie?> FindOne(int id)
         {
             return await _context.Movies.FirstOrDefaultAsync(x => x.Id == id);
         }
@@ -46,7 +46,7 @@ namespace onboarding_backend.Modules.Movie.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update(Database.Entities.Movie movie, MovieUpdateDto data)
+        public async Task Update(IMovie movie, MovieUpdateDto data)
         {
             movie.Title = data.Title;
             movie.Overview = data.Overview;
