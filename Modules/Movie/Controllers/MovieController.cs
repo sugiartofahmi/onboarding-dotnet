@@ -35,9 +35,10 @@ namespace onboarding_backend.Modules.Movie.Controllers
 
         }
         [HttpGet("id")]
-        public Task<ActionResult> Detail(int id)
+        public async Task<ActionResult<ApiResponse<IMovie>>> Detail(int id)
         {
-            return null;
+            var result = await _movieService.FindOne(id);
+            return new ApiResponse<IMovie>(data: result, success: true, message: "Success");
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)

@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using onboarding_backend.Common.Responses;
 using onboarding_backend.Database;
+using onboarding_backend.Dtos.Tag;
 using onboarding_backend.Interfaces;
 using Sprache;
 
@@ -15,14 +17,13 @@ namespace onboarding_backend.Modules.Tag.Repositories
     {
 
         private readonly AppDbContext _context = context;
-        public async Task<IActionResult> Pagination()
+        public async Task<PaginateResponse<ITag>> Pagination()
         {
-            var response = new
+            var result = await _context.Tags.ToListAsync();
+            return new PaginateResponse<ITag>
             {
-                success = true,
-                data = await _context.Tags.ToListAsync()
+                Items = result.Cast<ITag>().ToList()
             };
-            return new ObjectResult(response);
         }
 
         public async Task<ITag?> FindOne(int id)
@@ -30,24 +31,29 @@ namespace onboarding_backend.Modules.Tag.Repositories
             return await _context.Tags.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task Create(ITag data)
+        public async Task Create(TagCreateDto data)
         {
-            _context.Tags.Add((Database.Entities.Tag)data);
+            var tag = new Database.Entities.Tag
+            {
+                Name = data.Name
+            };
+
+            _context.Tags.Add(tag);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update(ITag data)
+        public async Task Update(ITag tag, TagUpdateDto data)
         {
-            _context.Entry(data).State = EntityState.Modified;
+            tag.Name = data.Name;
+
+            _context.Entry(tag).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+
         }
 
-        public async Task<bool> Delete(ITag data)
+        public async Task Delete(int id)
         {
-            _context.Entry(data).State = EntityState.Deleted;
-            var result = await _context.SaveChangesAsync();
-            if (result == 0) return false;
-            return true;
+            await _context.Tags.Where(x => x.Id == id).ExecuteDeleteAsync();
         }
 
 
