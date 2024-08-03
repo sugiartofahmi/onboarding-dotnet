@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using onboarding_backend.Common.Responses;
 using onboarding_backend.Dtos.Studio;
-using onboarding_backend.Dtos.Tag;
 using onboarding_backend.Interfaces;
 using onboarding_backend.Modules.Studio.Services;
-using onboarding_backend.Modules.Tag.Services;
 
 namespace onboarding_backend.Modules.Studio.Controllers
 {

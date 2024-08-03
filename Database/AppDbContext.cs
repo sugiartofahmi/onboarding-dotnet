@@ -21,5 +21,46 @@ namespace onboarding_backend.Database
         public DbSet<MovieSchedule> MovieSchedules { get; set; }
         public DbSet<Movie> Movies { get; set; }
 
+        public override int SaveChanges()
+        {
+            UpdateTimestamps();
+            return base.SaveChanges();
+        }
+
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            UpdateTimestamps();
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void UpdateTimestamps()
+        {
+            var entries = ChangeTracker
+                .Entries()
+                .Where(e => e.Entity is Base && (
+                        e.State == EntityState.Added
+                        || e.State == EntityState.Modified));
+
+            foreach (var entityEntry in entries)
+            {
+                ((Base)entityEntry.Entity).UpdatedAt = DateTime.Now;
+
+                if (entityEntry.State == EntityState.Added)
+                {
+                    ((Base)entityEntry.Entity).CreatedAt = DateTime.Now;
+                }
+            }
+        }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Movie>()
+                .HasQueryFilter(m => m.DeletedAt == null);
+        }
+
     }
 }

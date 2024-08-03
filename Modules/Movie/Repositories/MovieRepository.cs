@@ -42,7 +42,7 @@ namespace onboarding_backend.Modules.Movie.Repositories
                 PlayUntil = data.PlayUntil
             };
 
-            _context.Movies.Add(movie);
+            _context.Entry(movie).State = EntityState.Added;
             await _context.SaveChangesAsync();
         }
 

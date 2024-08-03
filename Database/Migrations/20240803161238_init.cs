@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace onboarding_backend.Migrations
+namespace onboarding_backend.Database.MIgrations
 {
     /// <inheritdoc />
     public partial class init : Migration
@@ -176,7 +176,7 @@ namespace onboarding_backend.Migrations
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     SubTotalPrice = table.Column<double>(type: "float", nullable: false),
-                    Snapshots = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Snapshots = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
