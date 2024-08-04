@@ -5,6 +5,7 @@ using onboarding_backend.Database;
 using onboarding_backend.Modules.Auth.Repositories;
 using onboarding_backend.Modules.Auth.Services;
 using onboarding_backend.Modules.Movie.Repositories;
+using onboarding_backend.Modules.Movie.Schedullers;
 using onboarding_backend.Modules.Movie.Services;
 using onboarding_backend.Modules.Order.Repositories;
 using onboarding_backend.Modules.Order.Services;
@@ -40,7 +41,8 @@ builder.Services.AddScoped<TagService>();
 builder.Services.AddScoped<TagRepository>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<AuthRepository>();
-
+builder.Services.AddHttpClient();
+builder.Services.AddHostedService<MovieScheduller>();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
