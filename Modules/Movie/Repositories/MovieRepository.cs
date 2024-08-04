@@ -63,5 +63,10 @@ namespace onboarding_backend.Modules.Movie.Repositories
             await _context.Movies.Where(x => x.Id == id).ExecuteDeleteAsync();
         }
 
+        public async Task<List<Database.Entities.Movie>> FindAll()
+        {
+            return await _context.Movies.ToListAsync();
+        }
+
     }
 }
