@@ -21,5 +21,14 @@ namespace onboarding_backend.Database.Entities
         [Required]
         public double Price { get; set; }
 
+        [Required]
+        public DateTime Date { get; set; }
+
+        [Required]
+        public string StartTime { get; set; }
+
+        [Required]
+        public string EndTime { get; set; }
+
     }
 }

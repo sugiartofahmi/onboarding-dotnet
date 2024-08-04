@@ -9,5 +9,7 @@ namespace onboarding_backend.Modules.Auth.Repositories
     public class AuthRepository(AppDbContext context)
     {
         public AppDbContext _context = context;
+
+
     }
 }

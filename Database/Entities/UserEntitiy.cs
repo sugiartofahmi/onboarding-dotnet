@@ -20,6 +20,8 @@ namespace onboarding_backend.Database.Entities
 
         [Required]
         public string Avatar { get; set; }
+
+        public bool IsAdmin { get; set; } = false;
         public List<Order>? Orders { get; set; }
 
 
