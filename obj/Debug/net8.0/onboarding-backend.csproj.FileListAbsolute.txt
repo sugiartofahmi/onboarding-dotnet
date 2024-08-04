@@ -139,3 +139,5 @@ C:\Users\fahmi\development\onboarding-dotnet\obj\Debug\net8.0\refint\onboarding-
 C:\Users\fahmi\development\onboarding-dotnet\obj\Debug\net8.0\onboarding-backend.pdb
 C:\Users\fahmi\development\onboarding-dotnet\obj\Debug\net8.0\onboarding-backend.genruntimeconfig.cache
 C:\Users\fahmi\development\onboarding-dotnet\obj\Debug\net8.0\ref\onboarding-backend.dll
+C:\Users\fahmi\development\onboarding-dotnet\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\fahmi\development\onboarding-dotnet\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

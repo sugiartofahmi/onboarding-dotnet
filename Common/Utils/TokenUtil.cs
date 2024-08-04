@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace onboarding_backend.Common.Utils
 {
-    public class TokenUtil
+    public class TokenUtils
     {
         public static string GenerateToken()
         {

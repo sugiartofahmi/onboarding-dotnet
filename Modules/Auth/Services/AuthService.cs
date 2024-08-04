@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using onboarding_backend.Common.Utils;
+using onboarding_backend.Dtos.Auth;
+using onboarding_backend.Interfaces;
 using onboarding_backend.Modules.Auth.Repositories;
 
 namespace onboarding_backend.Modules.Auth.Services
@@ -9,14 +12,28 @@ namespace onboarding_backend.Modules.Auth.Services
     public class AuthService(AuthRepository authRepository)
     {
         private AuthRepository _authRepository = authRepository;
-        public async Task Login()
+        public async Task<IUser> Login(LoginDto data)
         {
+            var user = await _authRepository.FindUser(data.Email);
+            if (user is null)
+            {
+                throw new Exception("User not found");
+            }
+            bool isPasswordValid = PasswordUtils.VerifyPassword(data.Password, user.Password);
+            Console.WriteLine(isPasswordValid);
+
+            if (!isPasswordValid)
+            {
+                throw new Exception("Invalid password");
+            }
+
+            return user;
 
         }
 
-        public async Task Register()
+        public async Task Register(RegisterDto data)
         {
-
+            await _authRepository.AddUser(data);
         }
 
     }
