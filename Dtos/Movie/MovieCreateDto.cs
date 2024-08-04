@@ -14,7 +14,8 @@ namespace onboarding_backend.Dtos.Movie
         [Required]
         public string Overview { get; set; } = default!;
 
-        public string? Poster { get; set; }
+        [Required]
+        public string Poster { get; set; } = default!;
 
         [Required]
         public DateTime PlayUntil { get; set; }

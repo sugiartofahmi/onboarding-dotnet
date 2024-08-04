@@ -17,10 +17,10 @@ namespace onboarding_backend.Modules.Tag.Controllers
         private readonly TagService _tagService = tagService;
 
         [HttpGet]
-        public async Task<ActionResult<ApiResponse<PaginateResponse<ITag>>>> Index()
+        public async Task<ActionResult<ApiResponse>> Index()
         {
             var result = await _tagService.Pagination();
-            return new ApiResponse<PaginateResponse<ITag>>(data: result, success: true, message: "Success");
+            return new ApiResponse(data: result, success: true, message: "Success");
 
         }
 
@@ -28,16 +28,16 @@ namespace onboarding_backend.Modules.Tag.Controllers
         public async Task<ActionResult> Create([FromBody] TagCreateDto request)
         {
             await _tagService.Create(request);
-            var response = new ApiResponse<string>(success: true, message: "Success");
+            var response = new ApiResponse(success: true, message: "Success");
 
             return Ok(response);
 
         }
         [HttpGet("id")]
-        public async Task<ActionResult<ApiResponse<ITag>>> Detail(int id)
+        public async Task<ActionResult<ApiResponse>> Detail(int id)
         {
             var result = await _tagService.FindOne(id);
-            return new ApiResponse<ITag>(data: result, success: true, message: "Success");
+            return new ApiResponse(data: result, success: true, message: "Success");
 
         }
         [HttpDelete("{id}")]
@@ -45,7 +45,7 @@ namespace onboarding_backend.Modules.Tag.Controllers
         {
             var result = await _tagService.Delete(id);
             if (!result) return NotFound();
-            var response = new ApiResponse<string>(success: true, message: "Success");
+            var response = new ApiResponse(success: true, message: "Success");
 
             return Ok(response);
         }
@@ -54,7 +54,7 @@ namespace onboarding_backend.Modules.Tag.Controllers
         {
             var result = await _tagService.Update(id, request);
             if (!result) return BadRequest();
-            var response = new ApiResponse<string>(success: true, message: "Success");
+            var response = new ApiResponse(success: true, message: "Success");
 
             return Ok(response);
         }

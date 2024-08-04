@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 
 namespace onboarding_backend.Common.Responses
 {
-    public class ApiResponse<T>
+    public class ApiResponse
     {
-        public T? Data { get; set; }
+        public object? Data { get; set; }
         public bool Success { get; set; }
 
         public string? Message { get; set; }
 
 
-        public ApiResponse(T? data, bool success = true, string? message = null)
+        public ApiResponse(object? data, bool success = true, string? message = null)
         {
             Data = data;
             Success = success;

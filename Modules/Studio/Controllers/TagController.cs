@@ -17,10 +17,10 @@ namespace onboarding_backend.Modules.Studio.Controllers
         private readonly StudioService _studioService = studioService;
 
         [HttpGet]
-        public async Task<ActionResult<ApiResponse<PaginateResponse<IStudio>>>> Index()
+        public async Task<ActionResult<ApiResponse>> Index()
         {
             var result = await _studioService.Pagination();
-            return new ApiResponse<PaginateResponse<IStudio>>(data: result, success: true, message: "Success");
+            return new ApiResponse(data: result, success: true, message: "Success");
 
         }
 
@@ -28,16 +28,16 @@ namespace onboarding_backend.Modules.Studio.Controllers
         public async Task<ActionResult> Create([FromBody] StudioCreateDto request)
         {
             await _studioService.Create(request);
-            var response = new ApiResponse<string>(success: true, message: "Success");
+            var response = new ApiResponse(success: true, message: "Success");
 
             return Ok(response);
 
         }
         [HttpGet("id")]
-        public async Task<ActionResult<ApiResponse<IStudio>>> Detail(int id)
+        public async Task<ActionResult<ApiResponse>> Detail(int id)
         {
             var result = await _studioService.FindOne(id);
-            return new ApiResponse<IStudio>(data: result, success: true, message: "Success");
+            return new ApiResponse(data: result, success: true, message: "Success");
 
         }
         [HttpDelete("{id}")]
@@ -45,7 +45,7 @@ namespace onboarding_backend.Modules.Studio.Controllers
         {
             var result = await _studioService.Delete(id);
             if (!result) return NotFound();
-            var response = new ApiResponse<string>(success: true, message: "Success");
+            var response = new ApiResponse(success: true, message: "Success");
 
             return Ok(response);
         }
@@ -54,7 +54,7 @@ namespace onboarding_backend.Modules.Studio.Controllers
         {
             var result = await _studioService.Update(id, request);
             if (!result) return BadRequest();
-            var response = new ApiResponse<string>(success: true, message: "Success");
+            var response = new ApiResponse(success: true, message: "Success");
 
             return Ok(response);
         }

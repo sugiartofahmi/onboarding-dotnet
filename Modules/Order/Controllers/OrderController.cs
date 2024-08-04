@@ -17,10 +17,10 @@ namespace onboarding_backend.Modules.Transaction.Controllers
     {
         private readonly OrderService _orderService = orderService;
         [HttpGet]
-        public async Task<ActionResult<ApiResponse<PaginateResponse<IOrder>>>> Index()
+        public async Task<ActionResult<ApiResponse>> Index()
         {
             var result = await _orderService.Pagination();
-            return new ApiResponse<PaginateResponse<IOrder>>(data: result, success: true, message: "Success");
+            return new ApiResponse(data: result, success: true, message: "Success");
 
         }
 
@@ -28,16 +28,16 @@ namespace onboarding_backend.Modules.Transaction.Controllers
         public async Task<ActionResult> Create([FromBody] OrderCreateDto request)
         {
             await _orderService.Create(request);
-            var response = new ApiResponse<string>(success: true, message: "Success");
+            var response = new ApiResponse(success: true, message: "Success");
 
             return Ok(response);
 
         }
         [HttpGet("id")]
-        public async Task<ActionResult<ApiResponse<IOrder>>> Detail(int id)
+        public async Task<ActionResult<ApiResponse>> Detail(int id)
         {
             var result = await _orderService.FindOne(id);
-            return new ApiResponse<IOrder>(data: result, success: true, message: "Success");
+            return new ApiResponse(data: result, success: true, message: "Success");
 
         }
         [HttpDelete("{id}")]
@@ -45,7 +45,7 @@ namespace onboarding_backend.Modules.Transaction.Controllers
         {
             var result = await _orderService.Delete(id);
             if (!result) return NotFound();
-            var response = new ApiResponse<string>(success: true, message: "Success");
+            var response = new ApiResponse(success: true, message: "Success");
 
             return Ok(response);
         }
@@ -54,7 +54,7 @@ namespace onboarding_backend.Modules.Transaction.Controllers
         {
             var result = await _orderService.Update(id, request);
             if (!result) return BadRequest();
-            var response = new ApiResponse<string>(success: true, message: "Success");
+            var response = new ApiResponse(success: true, message: "Success");
 
             return Ok(response);
         }

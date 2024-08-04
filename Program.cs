@@ -1,6 +1,9 @@
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using onboarding_backend;
 using onboarding_backend.Database;
+using onboarding_backend.Modules.Auth.Repositories;
+using onboarding_backend.Modules.Auth.Services;
 using onboarding_backend.Modules.Movie.Repositories;
 using onboarding_backend.Modules.Movie.Services;
 using onboarding_backend.Modules.Order.Repositories;
@@ -14,7 +17,11 @@ using onboarding_backend.Modules.Tag.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;
+    options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.SnakeCaseLower;
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -31,6 +38,8 @@ builder.Services.AddScoped<StudioService>();
 builder.Services.AddScoped<StudioRepository>();
 builder.Services.AddScoped<TagService>();
 builder.Services.AddScoped<TagRepository>();
+builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<AuthRepository>();
 
 var app = builder.Build();
 

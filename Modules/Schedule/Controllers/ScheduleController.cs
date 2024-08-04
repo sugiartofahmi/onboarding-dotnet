@@ -17,34 +17,34 @@ namespace onboarding_backend.Modules.Schedule.Controllers
         private readonly ScheduleService _scheduleService = scheduleService;
 
         [HttpGet]
-        public async Task<ActionResult<ApiResponse<PaginateResponse<IMovieSchedule>>>> Index()
+        public async Task<ActionResult<ApiResponse>> Index()
         {
             var result = await _scheduleService.Pagination();
-            return new ApiResponse<PaginateResponse<IMovieSchedule>>(data: result, success: true, message: "Success");
+            return new ApiResponse(data: result, success: true, message: "Success");
 
         }
 
         [HttpPost]
-        public async Task<ActionResult<ApiResponse<string>>> Create([FromBody] ScheduleCreateDto request)
+        public async Task<ActionResult<ApiResponse>> Create([FromBody] ScheduleCreateDto request)
         {
             await _scheduleService.Create(request);
-            var response = new ApiResponse<string>(success: true, message: "Success");
+            var response = new ApiResponse(success: true, message: "Success");
 
             return Ok(response);
 
         }
         [HttpGet("id")]
-        public async Task<ActionResult<ApiResponse<IMovieSchedule>>> Detail(int id)
+        public async Task<ActionResult<ApiResponse>> Detail(int id)
         {
             var result = await _scheduleService.FindOne(id);
-            return new ApiResponse<IMovieSchedule>(data: result, success: true, message: "Success");
+            return new ApiResponse(data: result, success: true, message: "Success");
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             var result = await _scheduleService.Delete(id);
             if (!result) return NotFound();
-            var response = new ApiResponse<string>(success: true, message: "Success");
+            var response = new ApiResponse(success: true, message: "Success");
 
             return Ok(response);
         }
@@ -53,7 +53,7 @@ namespace onboarding_backend.Modules.Schedule.Controllers
         {
             var result = await _scheduleService.Update(id, request);
             if (!result) return BadRequest();
-            var response = new ApiResponse<string>(success: true, message: "Success");
+            var response = new ApiResponse(success: true, message: "Success");
 
             return Ok(response);
         }
