@@ -7,6 +7,7 @@ C:\Users\fahmi\development\onboarding-dotnet\bin\Debug\net8.0\onboarding-backend
 C:\Users\fahmi\development\onboarding-dotnet\bin\Debug\net8.0\onboarding-backend.pdb
 C:\Users\fahmi\development\onboarding-dotnet\bin\Debug\net8.0\Azure.Core.dll
 C:\Users\fahmi\development\onboarding-dotnet\bin\Debug\net8.0\Azure.Identity.dll
+C:\Users\fahmi\development\onboarding-dotnet\bin\Debug\net8.0\Coravel.dll
 C:\Users\fahmi\development\onboarding-dotnet\bin\Debug\net8.0\DotNetEnv.dll
 C:\Users\fahmi\development\onboarding-dotnet\bin\Debug\net8.0\Humanizer.dll
 C:\Users\fahmi\development\onboarding-dotnet\bin\Debug\net8.0\Microsoft.AspNetCore.OpenApi.dll

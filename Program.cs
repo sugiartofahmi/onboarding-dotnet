@@ -1,9 +1,11 @@
 using System.Text.Json;
+using Coravel;
 using Microsoft.EntityFrameworkCore;
 using onboarding_backend;
 using onboarding_backend.Database;
 using onboarding_backend.Modules.Auth.Repositories;
 using onboarding_backend.Modules.Auth.Services;
+using onboarding_backend.Modules.Movie.Jobs;
 using onboarding_backend.Modules.Movie.Repositories;
 using onboarding_backend.Modules.Movie.Schedullers;
 using onboarding_backend.Modules.Movie.Services;
@@ -41,8 +43,10 @@ builder.Services.AddScoped<TagService>();
 builder.Services.AddScoped<TagRepository>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<AuthRepository>();
-builder.Services.AddHttpClient();
+builder.Services.AddScoped<MovieJob>();
 builder.Services.AddHostedService<MovieScheduller>();
+builder.Services.AddQueue();
+builder.Services.AddHttpClient();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
