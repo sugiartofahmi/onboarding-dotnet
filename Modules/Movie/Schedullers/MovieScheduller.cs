@@ -34,6 +34,8 @@ namespace onboarding_backend.Modules.Movie.Schedullers
         {
             while (!stoppingToken.IsCancellationRequested)
             {
+                var now = DateTime.Now;
+                var nextRun = now.Date.AddDays(1);
                 _logger.LogInformation("Movie Scheduler running");
                 try
                 {
@@ -50,7 +52,7 @@ namespace onboarding_backend.Modules.Movie.Schedullers
                         await movieJob.Handle(movieData);
                     }
 
-                    await Task.Delay(TimeSpan.FromSeconds(20), stoppingToken);
+                    await Task.Delay(TimeSpan.FromHours(1), stoppingToken);
                 }
                 catch (Exception error)
                 {
