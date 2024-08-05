@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using onboarding_backend.Common.Responses;
 using onboarding_backend.Dtos.Schedule;
@@ -12,6 +13,7 @@ namespace onboarding_backend.Modules.Schedule.Controllers
 {
     [Route("api/schedules")]
     [ApiController]
+    [Authorize]
     public class ScheduleController(ScheduleService scheduleService) : ControllerBase
     {
         private readonly ScheduleService _scheduleService = scheduleService;
