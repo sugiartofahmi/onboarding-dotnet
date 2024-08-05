@@ -19,14 +19,16 @@ namespace onboarding_backend.Modules.Transaction.Controllers
     public class OrderController(OrderService orderService) : ControllerBase
     {
         private readonly OrderService _orderService = orderService;
-        [HttpGet]
-        public async Task<ActionResult<ApiResponse>> Index([FromQuery] IndexDto request)
+
+        [HttpPost]
+        public async Task<ActionResult> Create([FromBody] OrderCreateDto request)
         {
-            var result = await _orderService.Pagination(request);
-            return new ApiResponse(data: result, success: true, message: "Success");
+            await _orderService.Create(request);
+            var response = new ApiResponse(success: true, message: "Success");
+
+            return Ok(response);
 
         }
-
         [HttpGet("id")]
         public async Task<ActionResult<ApiResponse>> Detail(int id)
         {
@@ -34,5 +36,7 @@ namespace onboarding_backend.Modules.Transaction.Controllers
             return new ApiResponse(data: result, success: true, message: "Success");
 
         }
+
+
     }
 }

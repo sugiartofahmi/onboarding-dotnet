@@ -37,7 +37,7 @@ namespace onboarding_backend.Modules.Movie.Controllers
             return Ok(response);
 
         }
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<ApiResponse>> Detail(int id)
         {
             var result = await _movieService.FindOne(id);

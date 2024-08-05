@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("onboarding-backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+db19de8f12e6af90df08d3a20c33d2be812a71bf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+83a89a13f404cd0b9c540b33da13e1277cc7670a")]
 [assembly: System.Reflection.AssemblyProductAttribute("onboarding-backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("onboarding-backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

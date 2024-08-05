@@ -15,7 +15,7 @@ namespace onboarding_backend.Modules.Movie.Controllers
 {
     [Route("api/movies")]
     [ApiController]
-    // [Authorize]
+    [Authorize]
     public class MovieController(MovieService movieService) : ControllerBase
     {
         private readonly MovieService _movieService = movieService;
@@ -28,38 +28,12 @@ namespace onboarding_backend.Modules.Movie.Controllers
 
         }
 
-        [HttpPost]
-        public async Task<ActionResult<ApiResponse>> Create([FromBody] MovieCreateDto request)
-        {
-            await _movieService.Create(request);
-            var response = new ApiResponse(success: true, message: "Success");
-
-            return Ok(response);
-
-        }
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<ApiResponse>> Detail(int id)
         {
             var result = await _movieService.FindOne(id);
             return new ApiResponse(data: result, success: true, message: "Success");
         }
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
-        {
-            var result = await _movieService.Delete(id);
-            if (!result) return NotFound();
-            var response = new ApiResponse(success: true, message: "Success");
 
-            return Ok(response);
-        }
-        [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id, [FromBody] MovieUpdateDto request)
-        {
-            var result = await _movieService.Update(id, request);
-            if (!result) return BadRequest();
-            var response = new ApiResponse(success: true, message: "Success");
-
-            return Ok(response);
-        }
     }
 }
