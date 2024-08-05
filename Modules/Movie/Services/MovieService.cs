@@ -8,6 +8,7 @@ using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Movie;
 using onboarding_backend.Interfaces;
 using onboarding_backend.Modules.Movie.Repositories;
+using onboarding_backend.Modules.Movie.Responses;
 
 namespace onboarding_backend.Modules.Movie.Services
 {
@@ -15,7 +16,7 @@ namespace onboarding_backend.Modules.Movie.Services
     {
         private readonly MovieRepository _movieRepository = movieRepository;
 
-        public async Task<PaginateResponse<IMovie>> Pagination(IndexDto request)
+        public async Task<PaginateResponse<MovieIndexResponse>> Pagination(IndexDto request)
         {
             return await _movieRepository.Pagination(request);
         }

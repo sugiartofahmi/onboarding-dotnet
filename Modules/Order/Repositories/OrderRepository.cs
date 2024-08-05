@@ -10,6 +10,7 @@ using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Order;
 using onboarding_backend.Dtos.Tag;
 using onboarding_backend.Interfaces;
+using onboarding_backend.Modules.Order.Responses;
 
 namespace onboarding_backend.Modules.Order.Repositories
 {
@@ -17,9 +18,9 @@ namespace onboarding_backend.Modules.Order.Repositories
     {
         private readonly IHttpContextAccessor _httpContextAccessor = _httpContextAccessor;
         private readonly AppDbContext _context = context;
-        public async Task<PaginateResponse<IOrder>> Pagination(IndexDto request)
+        public async Task<PaginateResponse<OrderIndexResponse>> Pagination(IndexDto request)
         {
-            var query = _context.Orders.Include(i => i.Items).AsQueryable();
+            var query = _context.Orders.Include(i => i.User).Include(i => i.Items).AsQueryable();
             var totalItems = await query.CountAsync();
             var totalPages = (int)Math.Ceiling(totalItems / (double)request.PerPage);
             var items = await query
@@ -29,9 +30,9 @@ namespace onboarding_backend.Modules.Order.Repositories
             var httpContext = _httpContextAccessor.HttpContext;
             var baseUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}{httpContext.Request.PathBase}{httpContext.Request.Path}";
 
-            return new PaginateResponse<IOrder>
+            return new PaginateResponse<OrderIndexResponse>
             {
-                Items = items.Cast<IOrder>().ToList(),
+                Items = OrderIndexResponse.FromEntities(items),
                 Pagination = new PaginationMeta
                 {
                     Page = request.Page,

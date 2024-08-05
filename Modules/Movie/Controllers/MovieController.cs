@@ -15,7 +15,7 @@ namespace onboarding_backend.Modules.Movie.Controllers
 {
     [Route("api/movies")]
     [ApiController]
-    // [Authorize]
+    [Authorize]
     public class MovieController(MovieService movieService) : ControllerBase
     {
         private readonly MovieService _movieService = movieService;

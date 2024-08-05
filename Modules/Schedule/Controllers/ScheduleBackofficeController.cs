@@ -14,7 +14,7 @@ namespace onboarding_backend.Modules.Schedule.Controllers
 {
     [Route("api/backoffice/schedules")]
     [ApiController]
-    // [Authorize]
+    [Authorize]
     public class ScheduleBackofficeController(ScheduleService scheduleService) : ControllerBase
     {
         private readonly ScheduleService _scheduleService = scheduleService;

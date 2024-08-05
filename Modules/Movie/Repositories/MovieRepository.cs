@@ -10,6 +10,7 @@ using onboarding_backend.Database;
 using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Movie;
 using onboarding_backend.Interfaces;
+using onboarding_backend.Modules.Movie.Responses;
 using Sprache;
 
 namespace onboarding_backend.Modules.Movie.Repositories
@@ -18,7 +19,7 @@ namespace onboarding_backend.Modules.Movie.Repositories
     {
         private readonly IHttpContextAccessor _httpContextAccessor = _httpContextAccessor;
         private readonly AppDbContext _context = context;
-        public async Task<PaginateResponse<IMovie>> Pagination(IndexDto request)
+        public async Task<PaginateResponse<MovieIndexResponse>> Pagination(IndexDto request)
         {
             var query = _context.Movies.Include(m => m.Tags).Include(m => m.Schedules).ThenInclude(s => s.Studio).Include(m => m.Schedules)
             .ThenInclude(s => s.OrderItems).AsQueryable();
@@ -47,9 +48,9 @@ namespace onboarding_backend.Modules.Movie.Repositories
 
             var httpContext = _httpContextAccessor.HttpContext;
             var baseUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}{httpContext.Request.PathBase}{httpContext.Request.Path}";
-            return new PaginateResponse<IMovie>
+            return new PaginateResponse<MovieIndexResponse>
             {
-                Items = items.Cast<IMovie>().ToList(),
+                Items = MovieIndexResponse.FromEntities(items.Cast<IMovie>().ToList()),
                 Pagination = new PaginationMeta
                 {
                     Page = request.Page,

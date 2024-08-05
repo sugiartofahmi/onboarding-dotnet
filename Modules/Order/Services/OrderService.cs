@@ -7,6 +7,7 @@ using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Order;
 using onboarding_backend.Interfaces;
 using onboarding_backend.Modules.Order.Repositories;
+using onboarding_backend.Modules.Order.Responses;
 
 namespace onboarding_backend.Modules.Order.Services
 {
@@ -14,7 +15,7 @@ namespace onboarding_backend.Modules.Order.Services
     {
         private readonly OrderRepository _orderRepository = orderRepository;
 
-        public async Task<PaginateResponse<IOrder>> Pagination(IndexDto request)
+        public async Task<PaginateResponse<OrderIndexResponse>> Pagination(IndexDto request)
         {
             return await _orderRepository.Pagination(request);
         }
