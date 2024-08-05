@@ -20,7 +20,7 @@ namespace onboarding_backend.Modules.Tag.Controllers
         private readonly TagService _tagService = tagService;
 
         [HttpGet]
-        public async Task<ActionResult<ApiResponse>> Index([FromBody] IndexDto request)
+        public async Task<ActionResult<ApiResponse>> Index([FromQuery] IndexDto request)
         {
             var result = await _tagService.Pagination(request);
             return new ApiResponse(data: result, success: true, message: "Success");

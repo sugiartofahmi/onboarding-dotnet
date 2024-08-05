@@ -20,7 +20,7 @@ namespace onboarding_backend.Modules.Schedule.Controllers
         private readonly ScheduleService _scheduleService = scheduleService;
 
         [HttpGet]
-        public async Task<ActionResult<ApiResponse>> Index([FromBody] IndexDto request)
+        public async Task<ActionResult<ApiResponse>> Index([FromQuery] IndexDto request)
         {
             var result = await _scheduleService.Pagination(request);
             return new ApiResponse(data: result, success: true, message: "Success");
