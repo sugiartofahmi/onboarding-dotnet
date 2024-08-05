@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using onboarding_backend.Common.Responses;
 using onboarding_backend.Dtos.Order;
@@ -13,6 +14,7 @@ namespace onboarding_backend.Modules.Transaction.Controllers
 {
     [Route("api/orders")]
     [ApiController]
+    [Authorize]
     public class OrderController(OrderService orderService) : ControllerBase
     {
         private readonly OrderService _orderService = orderService;

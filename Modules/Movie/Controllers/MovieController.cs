@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using onboarding_backend.Common.Responses;
@@ -13,6 +14,7 @@ namespace onboarding_backend.Modules.Movie.Controllers
 {
     [Route("api/movies")]
     [ApiController]
+    [Authorize]
     public class MovieController(MovieService movieService) : ControllerBase
     {
         private readonly MovieService _movieService = movieService;

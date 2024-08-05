@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using onboarding_backend.Common.Responses;
+using onboarding_backend.Common.Utils;
 using onboarding_backend.Dtos.Auth;
 using onboarding_backend.Interfaces;
 using onboarding_backend.Modules.Auth.Responses;
@@ -20,17 +21,15 @@ namespace onboarding_backend.Modules.Auth.Controllers
         public async Task<ActionResult<ApiResponse>> Login([FromBody] LoginDto request)
         {
             var user = await _authService.Login(request);
-
+            string token = TokenUtils.GenerateToken(user);
             var mapUser = new LoginResponse
             {
                 Email = user.Email,
                 Name = user.Name,
                 Avatar = user.Avatar,
-                Token = "token"
+                Token = token
             };
-            Console.WriteLine(mapUser.Email);
             return new ApiResponse(data: mapUser, success: true, message: "Success");
-
         }
 
         [HttpPost("register")]
@@ -40,7 +39,6 @@ namespace onboarding_backend.Modules.Auth.Controllers
             return new ApiResponse(success: true, message: "Success");
 
         }
-
 
     }
 }
