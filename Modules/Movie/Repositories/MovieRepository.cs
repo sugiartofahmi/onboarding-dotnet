@@ -14,9 +14,9 @@ using Sprache;
 
 namespace onboarding_backend.Modules.Movie.Repositories
 {
-    public class MovieRepository(AppDbContext context)
+    public class MovieRepository(AppDbContext context, IHttpContextAccessor _httpContextAccessor)
     {
-
+        private readonly IHttpContextAccessor _httpContextAccessor = _httpContextAccessor;
         private readonly AppDbContext _context = context;
         public async Task<PaginateResponse<IMovie>> Pagination(IndexDto request)
         {
@@ -34,6 +34,8 @@ namespace onboarding_backend.Modules.Movie.Repositories
            .Take(request.PerPage)
            .ToListAsync();
 
+            var httpContext = _httpContextAccessor.HttpContext;
+            var baseUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}{httpContext.Request.PathBase}{httpContext.Request.Path}";
             return new PaginateResponse<IMovie>
             {
                 Items = items.Cast<IMovie>().ToList(),
@@ -41,8 +43,15 @@ namespace onboarding_backend.Modules.Movie.Repositories
                 {
                     Page = request.Page,
                     PerPage = request.PerPage,
-                    Total = totalItems,
-                    TotalPages = totalPages
+                    TotalItems = totalItems,
+                    TotalPages = totalPages,
+                    NextPageLink = request.Page < totalPages
+                    ? $"{baseUrl}?Page={request.Page + 1}&PerPage={request.PerPage}"
+                    : null,
+                    PreviousPageLink = request.Page > 1
+                    ? $"{baseUrl}?Page={request.Page - 1}&PerPage={request.PerPage}"
+                    : null
+
                 }
             };
         }

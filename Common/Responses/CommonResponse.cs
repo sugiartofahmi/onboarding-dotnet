@@ -31,8 +31,11 @@ namespace onboarding_backend.Common.Responses
     {
         public int Page { get; set; }
         public int PerPage { get; set; }
-        public int Total { get; set; }
+        public int TotalItems { get; set; }
         public int TotalPages { get; set; }
+
+        public string NextPageLink { get; set; }
+        public string PreviousPageLink { get; set; }
     }
 
     public class PaginateResponse<T>
