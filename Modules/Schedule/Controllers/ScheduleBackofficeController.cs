@@ -14,17 +14,10 @@ namespace onboarding_backend.Modules.Schedule.Controllers
 {
     [Route("api/backoffice/schedules")]
     [ApiController]
-    [Authorize]
+    // [Authorize]
     public class ScheduleBackofficeController(ScheduleService scheduleService) : ControllerBase
     {
         private readonly ScheduleService _scheduleService = scheduleService;
-
-        [HttpGet]
-        public async Task<ActionResult<ApiResponse>> Index([FromQuery] IndexDto request)
-        {
-            var result = await _scheduleService.Pagination(request);
-            return new ApiResponse(data: result, success: true, message: "Success");
-        }
 
         [HttpPost]
         public async Task<ActionResult<ApiResponse>> Create([FromBody] ScheduleCreateDto request)
@@ -35,12 +28,7 @@ namespace onboarding_backend.Modules.Schedule.Controllers
             return Ok(response);
 
         }
-        [HttpGet("id")]
-        public async Task<ActionResult<ApiResponse>> Detail(int id)
-        {
-            var result = await _scheduleService.FindOne(id);
-            return new ApiResponse(data: result, success: true, message: "Success");
-        }
+
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {

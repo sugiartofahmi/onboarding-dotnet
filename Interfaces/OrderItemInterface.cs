@@ -13,7 +13,6 @@ namespace onboarding_backend.Interfaces
         public MovieSchedule MovieSchedule { get; set; }
         public int Quantity { get; set; }
 
-        public double Price { get; set; }
         public double SubTotalPrice { get; set; }
         public string? Snapshots { get; set; }
     }

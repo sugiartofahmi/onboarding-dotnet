@@ -19,9 +19,9 @@ namespace onboarding_backend.Modules.Order.Services
             return await _orderRepository.Pagination(request);
         }
 
-        public async Task Create(OrderCreateDto data)
+        public async Task Create(OrderCreateDto data, int userId)
         {
-            await _orderRepository.Create(data);
+            await _orderRepository.Create(data, userId);
         }
 
         public async Task<bool> Delete(int id)

@@ -11,5 +11,8 @@ namespace onboarding_backend.Interfaces
         public Movie Movie { get; set; }
         public Studio Studio { get; set; }
         public double Price { get; set; }
+
+
+
     }
 }

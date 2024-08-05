@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,19 +25,14 @@ namespace onboarding_backend.Modules.Transaction.Controllers
         [HttpPost]
         public async Task<ActionResult> Create([FromBody] OrderCreateDto request)
         {
-            await _orderService.Create(request);
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            await _orderService.Create(request, userId);
             var response = new ApiResponse(success: true, message: "Success");
 
             return Ok(response);
 
         }
-        [HttpGet("id")]
-        public async Task<ActionResult<ApiResponse>> Detail(int id)
-        {
-            var result = await _orderService.FindOne(id);
-            return new ApiResponse(data: result, success: true, message: "Success");
 
-        }
 
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using onboarding_backend.Interfaces;
 
@@ -13,17 +14,17 @@ namespace onboarding_backend.Database.Entities
     {
         [Required]
         public int OrderId { get; set; }
-        public Order Order { get; set; }
+
+        [JsonIgnore]
+        public Order Order { get; set; } = null!;
 
         [Required]
         public int MovieScheduleId { get; set; }
-        public MovieSchedule MovieSchedule { get; set; }
+        [JsonIgnore]
+        public MovieSchedule MovieSchedule { get; set; } = null!;
 
         [Required]
         public int Quantity { get; set; }
-
-        [Required]
-        public double Price { get; set; }
 
         [Required]
         public double SubTotalPrice { get; set; }

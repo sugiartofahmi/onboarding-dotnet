@@ -12,7 +12,7 @@ namespace onboarding_backend.Interfaces
         public string Overview { get; set; }
         public string Poster { get; set; }
         public DateTime PlayUntil { get; set; }
-        public List<MovieSchedule> Schedules { get; set; }
-        public List<MovieTag> Tags { get; set; }
+        public ICollection<MovieSchedule> Schedules { get; }
+        public List<Tag> Tags { get; }
     }
 }

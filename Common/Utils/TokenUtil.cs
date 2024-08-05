@@ -17,7 +17,8 @@ namespace onboarding_backend.Common.Utils
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(JwtRegisteredClaimNames.Name, user.Name)
+                new Claim(JwtRegisteredClaimNames.Name, user.Name),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString())
             };
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(Config.JwtSecret));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);

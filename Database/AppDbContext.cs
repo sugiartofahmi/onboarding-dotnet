@@ -18,7 +18,6 @@ namespace onboarding_backend.Database
         public DbSet<Studio> Studios { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<MovieTag> MovieTags { get; set; }
         public DbSet<MovieSchedule> MovieSchedules { get; set; }
         public DbSet<Movie> Movies { get; set; }
 
@@ -69,12 +68,20 @@ namespace onboarding_backend.Database
             .HasQueryFilter(m => m.DeletedAt == null);
             modelBuilder.Entity<Order>()
            .HasQueryFilter(m => m.DeletedAt == null);
-            modelBuilder.Entity<MovieTag>()
-           .HasQueryFilter(m => m.DeletedAt == null);
+
             modelBuilder.Entity<MovieSchedule>()
           .HasQueryFilter(m => m.DeletedAt == null);
             modelBuilder.Entity<Movie>()
                 .HasQueryFilter(m => m.DeletedAt == null);
+
+            modelBuilder.Entity<Movie>()
+               .HasMany(e => e.Tags)
+               .WithMany(e => e.Movies)
+               .UsingEntity(
+                   "MovieTags",
+                   l => l.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagId").HasPrincipalKey(nameof(Tag.Id)),
+                   r => r.HasOne(typeof(Movie)).WithMany().HasForeignKey("MovieId").HasPrincipalKey(nameof(Movie.Id)),
+                   j => j.HasKey("MovieId", "TagId"));
 
             new StudioSeeder(modelBuilder);
             new UserSeeder(modelBuilder);

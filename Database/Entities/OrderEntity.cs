@@ -12,13 +12,13 @@ namespace onboarding_backend.Database.Entities
     {
         [Required]
         public int UserId { get; set; }
-        public User User { get; set; }
+        public User User { get; set; } = null!;
 
         [Required]
         public PaymentMethodEnum PaymentMethod { get; set; }
 
         [Required]
         public double TotalItemPrice { get; set; }
-        public List<OrderItem> Items { get; set; }
+        public ICollection<OrderItem> Items { get; } = new List<OrderItem>();
     }
 }

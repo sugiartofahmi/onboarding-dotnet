@@ -20,7 +20,8 @@ namespace onboarding_backend.Modules.Movie.Repositories
         private readonly AppDbContext _context = context;
         public async Task<PaginateResponse<IMovie>> Pagination(IndexDto request)
         {
-            var query = _context.Movies.AsQueryable();
+            var query = _context.Movies.Include(m => m.Tags).Include(m => m.Schedules).ThenInclude(s => s.Studio).Include(m => m.Schedules)
+            .ThenInclude(s => s.OrderItems).AsQueryable();
             if (request.Search != null)
             {
                 query = query.Where(i => EF.Functions.Like(i.Title, "%" + request.Search + "%"));
@@ -33,6 +34,16 @@ namespace onboarding_backend.Modules.Movie.Repositories
            .Skip((request.Page - 1) * request.PerPage)
            .Take(request.PerPage)
            .ToListAsync();
+
+            // foreach (var movie in items)
+            // {
+            //     foreach (var schedule in movie.Schedules)
+            //     {
+            //         int totalSeats = schedule.Studio.SeatCapacity;
+            //         int bookedSeats = schedule.OrderItems.Sum(x => x.Quantity);
+            //         // schedule.SeatRemaining = totalSeats - bookedSeats;
+            //     }
+            // }
 
             var httpContext = _httpContextAccessor.HttpContext;
             var baseUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}{httpContext.Request.PathBase}{httpContext.Request.Path}";
@@ -60,7 +71,7 @@ namespace onboarding_backend.Modules.Movie.Repositories
 
         public async Task<IMovie?> FindOne(int id)
         {
-            return await _context.Movies.FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Movies.Include(m => m.Tags).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task Create(MovieCreateDto data)
@@ -83,6 +94,18 @@ namespace onboarding_backend.Modules.Movie.Repositories
             movie.Overview = data.Overview;
             movie.Poster = data.Poster;
             movie.PlayUntil = data.PlayUntil;
+
+            movie.Tags.Clear();
+
+
+            var selectedTags = await _context.Tags
+        .Where(t => data.TagIds.Contains(t.Id))
+        .ToListAsync();
+
+            foreach (var tag in selectedTags)
+            {
+                movie.Tags.Add(tag);
+            }
 
             _context.Entry(movie).State = EntityState.Modified;
             await _context.SaveChangesAsync();

@@ -22,7 +22,7 @@ namespace onboarding_backend.Database.Entities
 
         [Required]
         public DateTime PlayUntil { get; set; }
-        public List<MovieSchedule> Schedules { get; set; }
-        public List<MovieTag> Tags { get; set; }
+        public ICollection<MovieSchedule> Schedules { get; } = new List<MovieSchedule>();
+        public List<Tag> Tags { get; } = [];
     }
 }

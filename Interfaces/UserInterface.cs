@@ -13,6 +13,6 @@ namespace onboarding_backend.Interfaces
         public string Password { get; set; }
         public string Avatar { get; set; }
 
-        public List<Order> Orders { get; set; }
+        public ICollection<Order> Orders { get; }
     }
 }

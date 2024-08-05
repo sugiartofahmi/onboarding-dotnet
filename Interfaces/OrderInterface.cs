@@ -11,7 +11,7 @@ namespace onboarding_backend.Interfaces
         public User User { get; set; }
         public PaymentMethodEnum PaymentMethod { get; set; }
         public double TotalItemPrice { get; set; }
-        public List<OrderItem> Items { get; set; }
+        public ICollection<OrderItem> Items { get; }
     }
     public enum PaymentMethodEnum
     {

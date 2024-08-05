@@ -27,15 +27,6 @@ namespace onboarding_backend.Modules.Transaction.Controllers
 
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Create([FromBody] OrderCreateDto request)
-        {
-            await _orderService.Create(request);
-            var response = new ApiResponse(success: true, message: "Success");
-
-            return Ok(response);
-
-        }
         [HttpGet("id")]
         public async Task<ActionResult<ApiResponse>> Detail(int id)
         {

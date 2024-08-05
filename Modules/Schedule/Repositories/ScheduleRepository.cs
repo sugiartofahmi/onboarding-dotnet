@@ -18,7 +18,7 @@ namespace onboarding_backend.Modules.Schedule.Repositories
         private readonly AppDbContext _context = context;
         public async Task<PaginateResponse<IMovieSchedule>> Pagination(IndexDto request)
         {
-            var query = _context.MovieSchedules.AsQueryable();
+            var query = _context.MovieSchedules.Include(m => m.Movie).AsQueryable();
             var totalItems = await query.CountAsync();
             var totalPages = (int)Math.Ceiling(totalItems / (double)request.PerPage);
             var items = await query
@@ -57,7 +57,10 @@ namespace onboarding_backend.Modules.Schedule.Repositories
             {
                 Price = data.Price,
                 MovieId = data.MovieId,
-                StudioId = data.StudioId
+                StudioId = data.StudioId,
+                Date = data.Date,
+                StartTime = data.StartTime,
+                EndTime = data.EndTime
             };
 
             _context.MovieSchedules.Add(schedule);

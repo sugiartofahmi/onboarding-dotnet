@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace onboarding_backend.Database.MIgrations
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
+namespace onboarding_backend.Database.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -73,6 +75,7 @@ namespace onboarding_backend.Database.MIgrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Avatar = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsAdmin = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -91,6 +94,9 @@ namespace onboarding_backend.Database.MIgrations
                     MovieId = table.Column<int>(type: "int", nullable: false),
                     StudioId = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StartTime = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EndTime = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -116,17 +122,12 @@ namespace onboarding_backend.Database.MIgrations
                 name: "MovieTags",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     MovieId = table.Column<int>(type: "int", nullable: false),
-                    TagId = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    TagId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MovieTags", x => x.Id);
+                    table.PrimaryKey("PK_MovieTags", x => new { x.MovieId, x.TagId });
                     table.ForeignKey(
                         name: "FK_MovieTags_Movies_MovieId",
                         column: x => x.MovieId,
@@ -198,6 +199,37 @@ namespace onboarding_backend.Database.MIgrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Studios",
+                columns: new[] { "Id", "CreatedAt", "DeletedAt", "SeatCapacity", "StudioNumber", "UpdatedAt" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2024, 8, 5, 20, 49, 45, 705, DateTimeKind.Local).AddTicks(6363), null, 10, 1, new DateTime(2024, 8, 5, 20, 49, 45, 705, DateTimeKind.Local).AddTicks(6377) },
+                    { 2, new DateTime(2024, 8, 5, 20, 49, 45, 705, DateTimeKind.Local).AddTicks(6379), null, 15, 2, new DateTime(2024, 8, 5, 20, 49, 45, 705, DateTimeKind.Local).AddTicks(6380) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Tags",
+                columns: new[] { "Id", "CreatedAt", "DeletedAt", "Name", "UpdatedAt" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1423), null, "Action", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1433) },
+                    { 2, new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1459), null, "Comedy", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1461) },
+                    { 3, new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1462), null, "Drama", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1463) },
+                    { 4, new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1465), null, "Horror", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1465) },
+                    { 5, new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1467), null, "Romance", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1467) },
+                    { 6, new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1469), null, "Science Fiction", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1470) },
+                    { 7, new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1471), null, "Fantasy", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1472) },
+                    { 8, new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1473), null, "Thriller", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1474) },
+                    { 9, new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1475), null, "Mystery", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1476) },
+                    { 10, new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1477), null, "Documentary", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1478) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Avatar", "CreatedAt", "DeletedAt", "Email", "IsAdmin", "Name", "Password", "UpdatedAt" },
+                values: new object[] { 1, "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-479x512-n8sg74wg.png", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(999), null, "admin@admin.com", true, "Admin", "$2a$11$SDIs45P/wDS5Hlmri8CzXel.PgTzFD0PP9UdDrBJWwfLn5gJ0.r5u", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1014) });
+
             migrationBuilder.CreateIndex(
                 name: "IX_MovieSchedules_MovieId",
                 table: "MovieSchedules",
@@ -207,11 +239,6 @@ namespace onboarding_backend.Database.MIgrations
                 name: "IX_MovieSchedules_StudioId",
                 table: "MovieSchedules",
                 column: "StudioId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MovieTags_MovieId",
-                table: "MovieTags",
-                column: "MovieId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MovieTags_TagId",
