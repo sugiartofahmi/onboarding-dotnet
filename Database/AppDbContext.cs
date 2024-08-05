@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using onboarding_backend.Database.Entities;
+using onboarding_backend.Database.Seeders;
 
 namespace onboarding_backend.Database
 {
@@ -60,7 +61,11 @@ namespace onboarding_backend.Database
 
             modelBuilder.Entity<Movie>()
                 .HasQueryFilter(m => m.DeletedAt == null);
-        }
 
+            new StudioSeeder(modelBuilder);
+            new UserSeeder(modelBuilder);
+            new TagSeeder(modelBuilder);
+
+        }
     }
 }

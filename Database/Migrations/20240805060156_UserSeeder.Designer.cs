@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using onboarding_backend.Database;
 
@@ -11,9 +12,11 @@ using onboarding_backend.Database;
 namespace onboarding_backend.Database.MIgrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240805060156_UserSeeder")]
+    partial class UserSeeder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -246,18 +249,18 @@ namespace onboarding_backend.Database.MIgrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 8, 5, 13, 2, 28, 196, DateTimeKind.Local).AddTicks(473),
+                            CreatedAt = new DateTime(2024, 8, 5, 13, 1, 56, 16, DateTimeKind.Local).AddTicks(2304),
                             SeatCapacity = 10,
                             StudioNumber = 1,
-                            UpdatedAt = new DateTime(2024, 8, 5, 13, 2, 28, 196, DateTimeKind.Local).AddTicks(484)
+                            UpdatedAt = new DateTime(2024, 8, 5, 13, 1, 56, 16, DateTimeKind.Local).AddTicks(2316)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 8, 5, 13, 2, 28, 196, DateTimeKind.Local).AddTicks(485),
+                            CreatedAt = new DateTime(2024, 8, 5, 13, 1, 56, 16, DateTimeKind.Local).AddTicks(2318),
                             SeatCapacity = 15,
                             StudioNumber = 2,
-                            UpdatedAt = new DateTime(2024, 8, 5, 13, 2, 28, 196, DateTimeKind.Local).AddTicks(486)
+                            UpdatedAt = new DateTime(2024, 8, 5, 13, 1, 56, 16, DateTimeKind.Local).AddTicks(2318)
                         });
                 });
 
@@ -285,58 +288,6 @@ namespace onboarding_backend.Database.MIgrations
                     b.HasKey("Id");
 
                     b.ToTable("Tags");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Action"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Comedy"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Drama"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Horror"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Romance"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Science Fiction"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Fantasy"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Thriller"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Mystery"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Documentary"
-                        });
                 });
 
             modelBuilder.Entity("onboarding_backend.Database.Entities.User", b =>
@@ -384,12 +335,12 @@ namespace onboarding_backend.Database.MIgrations
                         {
                             Id = 1,
                             Avatar = "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-479x512-n8sg74wg.png",
-                            CreatedAt = new DateTime(2024, 8, 5, 13, 2, 28, 377, DateTimeKind.Local).AddTicks(6573),
+                            CreatedAt = new DateTime(2024, 8, 5, 13, 1, 56, 165, DateTimeKind.Local).AddTicks(5067),
                             Email = "admin@admin.com",
                             IsAdmin = true,
                             Name = "Admin",
-                            Password = "$2a$11$/GYfam84hfE20rR.bmWfoeumzZHFVsnORJ6OrjzSF6/n.KsZ/uzBu",
-                            UpdatedAt = new DateTime(2024, 8, 5, 13, 2, 28, 377, DateTimeKind.Local).AddTicks(6589)
+                            Password = "$2a$11$VYyUiqYkxNYDnc5Nz0UVqeobdq1.QEcej/roYeeLZlyqXifua1yli",
+                            UpdatedAt = new DateTime(2024, 8, 5, 13, 1, 56, 165, DateTimeKind.Local).AddTicks(5084)
                         });
                 });
 
