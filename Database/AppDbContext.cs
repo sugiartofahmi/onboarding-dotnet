@@ -59,6 +59,20 @@ namespace onboarding_backend.Database
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<User>()
+                           .HasQueryFilter(m => m.DeletedAt == null);
+            modelBuilder.Entity<Tag>()
+            .HasQueryFilter(m => m.DeletedAt == null);
+            modelBuilder.Entity<Studio>()
+           .HasQueryFilter(m => m.DeletedAt == null);
+            modelBuilder.Entity<OrderItem>()
+            .HasQueryFilter(m => m.DeletedAt == null);
+            modelBuilder.Entity<Order>()
+           .HasQueryFilter(m => m.DeletedAt == null);
+            modelBuilder.Entity<MovieTag>()
+           .HasQueryFilter(m => m.DeletedAt == null);
+            modelBuilder.Entity<MovieSchedule>()
+          .HasQueryFilter(m => m.DeletedAt == null);
             modelBuilder.Entity<Movie>()
                 .HasQueryFilter(m => m.DeletedAt == null);
 
