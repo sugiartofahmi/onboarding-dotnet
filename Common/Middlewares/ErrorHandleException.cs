@@ -46,6 +46,7 @@ namespace onboarding_backend.Common.Middlewares
                 await WriteResponseAsync(context, ex.Message);
             }
 
+
         }
 
         private static async Task WriteResponseAsync(HttpContext context, String message)

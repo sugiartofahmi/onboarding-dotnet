@@ -9,13 +9,13 @@ namespace onboarding_backend.Dtos.Order
 {
     public class OrderCreateDto
     {
-        [Required]
+        [Required(ErrorMessage = "User Id tidak boleh kosong")]
         public int UserId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Payment Method tidak boleh kosong")]
         public PaymentMethodEnum PaymentMethod { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Total Item Price tidak boleh kosong")]
         public double TotalItemPrice { get; set; }
     }
 }
