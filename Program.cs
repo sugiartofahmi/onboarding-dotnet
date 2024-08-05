@@ -103,6 +103,7 @@ builder.Services.AddScoped<MovieJob>();
 builder.Services.AddHostedService<MovieScheduller>();
 builder.Services.AddQueue();
 builder.Services.AddHttpClient();
+builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
