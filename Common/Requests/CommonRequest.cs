@@ -10,5 +10,7 @@ namespace onboarding_backend.Common.Requests
     {
         public int PerPage { get; set; }
         public int Page { get; set; }
+
+        public string Search { get; set; }
     }
 }
