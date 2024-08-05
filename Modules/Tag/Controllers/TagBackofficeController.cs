@@ -5,31 +5,31 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using onboarding_backend.Common.Responses;
-using onboarding_backend.Dtos.Studio;
+using onboarding_backend.Dtos.Tag;
 using onboarding_backend.Interfaces;
-using onboarding_backend.Modules.Studio.Services;
+using onboarding_backend.Modules.Tag.Services;
 
-namespace onboarding_backend.Modules.Studio.Controllers
+namespace onboarding_backend.Modules.Tag.Controllers
 {
-    [Route("api/studios")]
+    [Route("api/backoffice/tags")]
     [ApiController]
     [Authorize]
-    public class TagController(StudioService studioService) : ControllerBase
+    public class TagBackofficeController(TagService tagService) : ControllerBase
     {
-        private readonly StudioService _studioService = studioService;
+        private readonly TagService _tagService = tagService;
 
         [HttpGet]
         public async Task<ActionResult<ApiResponse>> Index()
         {
-            var result = await _studioService.Pagination();
+            var result = await _tagService.Pagination();
             return new ApiResponse(data: result, success: true, message: "Success");
 
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create([FromBody] StudioCreateDto request)
+        public async Task<ActionResult> Create([FromBody] TagCreateDto request)
         {
-            await _studioService.Create(request);
+            await _tagService.Create(request);
             var response = new ApiResponse(success: true, message: "Success");
 
             return Ok(response);
@@ -38,23 +38,23 @@ namespace onboarding_backend.Modules.Studio.Controllers
         [HttpGet("id")]
         public async Task<ActionResult<ApiResponse>> Detail(int id)
         {
-            var result = await _studioService.FindOne(id);
+            var result = await _tagService.FindOne(id);
             return new ApiResponse(data: result, success: true, message: "Success");
 
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var result = await _studioService.Delete(id);
+            var result = await _tagService.Delete(id);
             if (!result) return NotFound();
             var response = new ApiResponse(success: true, message: "Success");
 
             return Ok(response);
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id, [FromBody] StudioUpdateDto request)
+        public async Task<ActionResult> Update(int id, [FromBody] TagUpdateDto request)
         {
-            var result = await _studioService.Update(id, request);
+            var result = await _tagService.Update(id, request);
             if (!result) return BadRequest();
             var response = new ApiResponse(success: true, message: "Success");
 
