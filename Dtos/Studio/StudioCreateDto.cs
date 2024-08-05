@@ -9,10 +9,10 @@ namespace onboarding_backend.Dtos.Studio
 {
     public class StudioCreateDto
     {
-        [Required]
+        [Required(ErrorMessage = "Studio Number tidak boleh kosong")]
         public int StudioNumber { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Seat Capacity tidak boleh kosong")]
         public int SeatCapacity { get; set; }
     }
 }

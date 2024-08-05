@@ -8,11 +8,13 @@ namespace onboarding_backend.Dtos.Schedule
 {
     public class ScheduleCreateDto
     {
-        [Required]
+        [Required(ErrorMessage = "Price tidak boleh kosong")]
         public double Price { get; set; }
 
+        [Required(ErrorMessage = "Movie Id tidak boleh kosong")]
         public int MovieId { get; set; }
 
+        [Required(ErrorMessage = "Studio Id tidak boleh kosong")]
         public int StudioId { get; set; }
     }
 }
