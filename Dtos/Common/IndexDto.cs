@@ -10,5 +10,6 @@ namespace onboarding_backend.Dtos.Common
     {
         public int PerPage { get; set; }
         public int Page { get; set; }
+        public string Search { get; set; }
     }
 }
