@@ -20,7 +20,7 @@ namespace onboarding_backend.Modules.Studio.Controllers
         private readonly StudioService _studioService = studioService;
 
         [HttpGet]
-        public async Task<ActionResult<ApiResponse>> Index([FromBody] IndexDto request)
+        public async Task<ActionResult<ApiResponse>> Index([FromQuery] IndexDto request)
         {
             var result = await _studioService.Pagination(request);
             return new ApiResponse(data: result, success: true, message: "Success");
