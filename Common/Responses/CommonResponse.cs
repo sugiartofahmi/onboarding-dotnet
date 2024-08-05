@@ -15,9 +15,9 @@ namespace onboarding_backend.Common.Responses
 
         public ApiResponse(object? data, bool success = true, string? message = null)
         {
-            Data = data;
             Success = success;
             Message = message;
+            Data = data;
         }
 
         public ApiResponse(bool success, string? message = null)

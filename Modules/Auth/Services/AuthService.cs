@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http.HttpResults;
+using onboarding_backend.Common.Middlewares;
 using onboarding_backend.Common.Utils;
 using onboarding_backend.Dtos.Auth;
 using onboarding_backend.Interfaces;
@@ -17,14 +19,14 @@ namespace onboarding_backend.Modules.Auth.Services
             var user = await _authRepository.FindUser(data.Email);
             if (user is null)
             {
-                throw new Exception("User not found");
+                throw new NotFoundException("User not found");
             }
             bool isPasswordValid = PasswordUtils.VerifyPassword(data.Password, user.Password);
             Console.WriteLine(isPasswordValid);
 
             if (!isPasswordValid)
             {
-                throw new Exception("Invalid password");
+                throw new UnauthorizedAccessException("Invalid password");
             }
 
             return user;
