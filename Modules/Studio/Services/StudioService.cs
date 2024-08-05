@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using onboarding_backend.Common.Responses;
+using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Studio;
 using onboarding_backend.Dtos.Tag;
 using onboarding_backend.Interfaces;
@@ -14,9 +15,9 @@ namespace onboarding_backend.Modules.Studio.Services
     {
         private readonly StudioRepository _studioRepository = studioRepository;
 
-        public async Task<PaginateResponse<IStudio>> Pagination()
+        public async Task<PaginateResponse<IStudio>> Pagination(IndexDto request)
         {
-            return await _studioRepository.Pagination();
+            return await _studioRepository.Pagination(request);
         }
 
         public async Task Create(StudioCreateDto data)

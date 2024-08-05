@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using onboarding_backend.Common.Responses;
 using onboarding_backend.Database;
+using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Studio;
 using onboarding_backend.Dtos.Tag;
 using onboarding_backend.Interfaces;
@@ -18,12 +19,27 @@ namespace onboarding_backend.Modules.Studio.Repositories
     {
 
         private readonly AppDbContext _context = context;
-        public async Task<PaginateResponse<IStudio>> Pagination()
+        public async Task<PaginateResponse<IStudio>> Pagination(IndexDto request)
         {
-            var result = await _context.Studios.ToListAsync();
+            var query = _context.Studios.AsQueryable();
+            var totalItems = await query.CountAsync();
+            var totalPages = (int)Math.Ceiling(totalItems / (double)request.PerPage);
+
+            var items = await query
+           .Skip((request.Page - 1) * request.PerPage)
+           .Take(request.PerPage)
+           .ToListAsync();
+
             return new PaginateResponse<IStudio>
             {
-                Items = result.Cast<IStudio>().ToList()
+                Items = items.Cast<IStudio>().ToList(),
+                Pagination = new PaginationMeta
+                {
+                    Page = request.Page,
+                    PerPage = request.PerPage,
+                    Total = totalItems,
+                    TotalPages = totalPages
+                }
             };
         }
 

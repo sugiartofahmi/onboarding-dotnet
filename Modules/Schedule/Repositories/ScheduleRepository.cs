@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using onboarding_backend.Common.Responses;
 using onboarding_backend.Database;
 using onboarding_backend.Database.Entities;
+using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Schedule;
 using onboarding_backend.Interfaces;
 
@@ -14,12 +15,25 @@ namespace onboarding_backend.Modules.Schedule.Repositories
     public class ScheduleRepository(AppDbContext context)
     {
         private readonly AppDbContext _context = context;
-        public async Task<PaginateResponse<IMovieSchedule>> Pagination()
+        public async Task<PaginateResponse<IMovieSchedule>> Pagination(IndexDto request)
         {
-            var result = await _context.MovieSchedules.ToListAsync();
+            var query = _context.MovieSchedules.AsQueryable();
+            var totalItems = await query.CountAsync();
+            var totalPages = (int)Math.Ceiling(totalItems / (double)request.PerPage);
+            var items = await query
+         .Skip((request.Page - 1) * request.PerPage)
+         .Take(request.PerPage)
+         .ToListAsync();
             return new PaginateResponse<IMovieSchedule>
             {
-                Items = result.Cast<IMovieSchedule>().ToList()
+                Items = items.Cast<IMovieSchedule>().ToList(),
+                Pagination = new PaginationMeta
+                {
+                    Page = request.Page,
+                    PerPage = request.PerPage,
+                    Total = totalItems,
+                    TotalPages = totalPages
+                }
             };
         }
 

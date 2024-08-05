@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using onboarding_backend.Common.Responses;
+using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Tag;
 using onboarding_backend.Interfaces;
 using onboarding_backend.Modules.Tag.Services;
@@ -19,9 +20,9 @@ namespace onboarding_backend.Modules.Tag.Controllers
         private readonly TagService _tagService = tagService;
 
         [HttpGet]
-        public async Task<ActionResult<ApiResponse>> Index()
+        public async Task<ActionResult<ApiResponse>> Index([FromBody] IndexDto request)
         {
-            var result = await _tagService.Pagination();
+            var result = await _tagService.Pagination(request);
             return new ApiResponse(data: result, success: true, message: "Success");
 
         }

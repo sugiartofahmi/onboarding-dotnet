@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using onboarding_backend.Common.Responses;
+using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Movie;
 using onboarding_backend.Interfaces;
 using onboarding_backend.Modules.Movie.Services;
@@ -20,9 +21,9 @@ namespace onboarding_backend.Modules.Movie.Controllers
         private readonly MovieService _movieService = movieService;
 
         [HttpGet]
-        public async Task<ActionResult<ApiResponse>> Index()
+        public async Task<ActionResult<ApiResponse>> Index([FromQuery] IndexDto request)
         {
-            var result = await _movieService.Pagination();
+            var result = await _movieService.Pagination(request);
             return new ApiResponse(data: result, success: true, message: "Success");
 
         }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using onboarding_backend.Common.Responses;
+using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Order;
 using onboarding_backend.Interfaces;
 using onboarding_backend.Modules.Order.Repositories;
@@ -19,9 +20,9 @@ namespace onboarding_backend.Modules.Transaction.Controllers
     {
         private readonly OrderService _orderService = orderService;
         [HttpGet]
-        public async Task<ActionResult<ApiResponse>> Index()
+        public async Task<ActionResult<ApiResponse>> Index([FromQuery] IndexDto request)
         {
-            var result = await _orderService.Pagination();
+            var result = await _orderService.Pagination(request);
             return new ApiResponse(data: result, success: true, message: "Success");
 
         }
