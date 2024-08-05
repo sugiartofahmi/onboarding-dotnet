@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using onboarding_backend.Common.Responses;
+using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Order;
 using onboarding_backend.Interfaces;
 using onboarding_backend.Modules.Order.Repositories;
@@ -13,9 +14,9 @@ namespace onboarding_backend.Modules.Order.Services
     {
         private readonly OrderRepository _orderRepository = orderRepository;
 
-        public async Task<PaginateResponse<IOrder>> Pagination()
+        public async Task<PaginateResponse<IOrder>> Pagination(IndexDto request)
         {
-            return await _orderRepository.Pagination();
+            return await _orderRepository.Pagination(request);
         }
 
         public async Task Create(OrderCreateDto data)

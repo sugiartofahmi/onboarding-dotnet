@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using onboarding_backend.Common.Responses;
+using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Tag;
 using onboarding_backend.Interfaces;
 using onboarding_backend.Modules.Tag.Repositories;
@@ -13,9 +14,9 @@ namespace onboarding_backend.Modules.Tag.Services
     {
         private readonly TagRepository _tagRepository = tagRepository;
 
-        public async Task<PaginateResponse<ITag>> Pagination()
+        public async Task<PaginateResponse<ITag>> Pagination(IndexDto request)
         {
-            return await _tagRepository.Pagination();
+            return await _tagRepository.Pagination(request);
         }
 
         public async Task Create(TagCreateDto data)

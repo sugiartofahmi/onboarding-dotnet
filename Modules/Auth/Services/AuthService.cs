@@ -22,7 +22,6 @@ namespace onboarding_backend.Modules.Auth.Services
                 throw new NotFoundException("User not found");
             }
             bool isPasswordValid = PasswordUtils.VerifyPassword(data.Password, user.Password);
-            Console.WriteLine(isPasswordValid);
 
             if (!isPasswordValid)
             {

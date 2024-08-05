@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using onboarding_backend.Common.Responses;
 using onboarding_backend.Database;
+using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Tag;
 using onboarding_backend.Interfaces;
 using Sprache;
@@ -17,12 +18,31 @@ namespace onboarding_backend.Modules.Tag.Repositories
     {
 
         private readonly AppDbContext _context = context;
-        public async Task<PaginateResponse<ITag>> Pagination()
+        public async Task<PaginateResponse<ITag>> Pagination(IndexDto request)
         {
-            var result = await _context.Tags.ToListAsync();
+            var query = _context.Tags.AsQueryable();
+            if (request.Search != null)
+            {
+                query = query.Where(i => EF.Functions.Like(i.Name, "%" + request.Search + "%"));
+            }
+            var totalItems = await query.CountAsync();
+            var totalPages = (int)Math.Ceiling(totalItems / (double)request.PerPage);
+
+            var items = await query
+           .Skip((request.Page - 1) * request.PerPage)
+           .Take(request.PerPage)
+           .ToListAsync();
+
             return new PaginateResponse<ITag>
             {
-                Items = result.Cast<ITag>().ToList()
+                Items = items.Cast<ITag>().ToList(),
+                Pagination = new PaginationMeta
+                {
+                    Page = request.Page,
+                    PerPage = request.PerPage,
+                    Total = totalItems,
+                    TotalPages = totalPages
+                }
             };
         }
 
