@@ -26,19 +26,11 @@ namespace onboarding_backend.Modules.Schedule.Repositories
             return new PaginateResponse<IMovieSchedule>
             {
                 Items = items.Cast<IMovieSchedule>().ToList(),
-                Pagination = new PaginationMeta
-                {
-                    Page = request.Page,
-                    PerPage = request.PerPage,
-                    TotalItems = totalItems,
-                    TotalPages = totalPages,
-                    NextPageLink = request.Page < totalPages
-                    ? $"{baseUrl}?Page={request.Page + 1}&PerPage={request.PerPage}"
-                    : null,
-                    PreviousPageLink = request.Page > 1
-                    ? $"{baseUrl}?Page={request.Page - 1}&PerPage={request.PerPage}"
-                    : null
-                }
+                Pagination = new PaginationMeta(page: request.Page,
+                    perPage: request.PerPage,
+                    totalItems: totalItems,
+                    totalPages: totalPages,
+                    baseUrl: baseUrl)
             };
         }
 

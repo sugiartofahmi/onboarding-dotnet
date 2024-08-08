@@ -42,7 +42,7 @@ namespace onboarding_backend.Modules.Tag.Services
             return true;
         }
 
-        public async Task<ITag> FindOne(int id)
+        public async Task<ITag?> FindOne(int id)
         {
             return await _tagRepository.FindOne(id);
         }

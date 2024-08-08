@@ -27,23 +27,15 @@ namespace onboarding_backend.Modules.Tag.Repositories
            .Take(request.PerPage)
            .ToListAsync();
             var httpContext = _httpContextAccessor.HttpContext;
-            var baseUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}{httpContext.Request.PathBase}{httpContext.Request.Path}";
+            string baseUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}{httpContext.Request.PathBase}{httpContext.Request.Path}";
             return new PaginateResponse<ITag>
             {
                 Items = items.Cast<ITag>().ToList(),
-                Pagination = new PaginationMeta
-                {
-                    Page = request.Page,
-                    PerPage = request.PerPage,
-                    TotalItems = totalItems,
-                    TotalPages = totalPages,
-                    NextPageLink = request.Page < totalPages
-                    ? $"{baseUrl}?Page={request.Page + 1}&PerPage={request.PerPage}"
-                    : null,
-                    PreviousPageLink = request.Page > 1
-                    ? $"{baseUrl}?Page={request.Page - 1}&PerPage={request.PerPage}"
-                    : null
-                }
+                Pagination = new PaginationMeta(page: request.Page,
+                    perPage: request.PerPage,
+                    totalItems: totalItems,
+                    totalPages: totalPages,
+                    baseUrl: baseUrl)
             };
         }
 
