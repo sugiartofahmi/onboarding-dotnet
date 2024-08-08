@@ -7,9 +7,9 @@ namespace onboarding_backend.Dtos.Auth
     {
 
         [Required(ErrorMessage = "Avatar tidak boleh kosong")]
-        public string Avatar { get; set; }
+        public string Avatar { get; set; } = default!;
 
         [Required(ErrorMessage = "Nama tidak boleh kosong")]
-        public string Name { get; set; }
+        public string Name { get; set; } = default!;
     }
 }

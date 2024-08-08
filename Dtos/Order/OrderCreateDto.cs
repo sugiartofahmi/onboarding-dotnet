@@ -12,7 +12,7 @@ namespace onboarding_backend.Dtos.Order
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public PaymentMethodEnum PaymentMethod { get; set; }
 
-        public List<OrderItemCreateDto> Items { get; set; }
+        public List<OrderItemCreateDto> Items { get; set; } = new List<OrderItemCreateDto>();
 
     }
 

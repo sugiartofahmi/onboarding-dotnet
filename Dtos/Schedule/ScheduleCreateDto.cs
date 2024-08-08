@@ -17,9 +17,9 @@ namespace onboarding_backend.Dtos.Schedule
         public DateTime Date { get; set; }
 
         [Required(ErrorMessage = "Start Time tidak boleh kosong")]
-        public string StartTime { get; set; }
+        public string StartTime { get; set; } = default!;
 
         [Required(ErrorMessage = "End Time tidak boleh kosong")]
-        public string EndTime { get; set; }
+        public string EndTime { get; set; } = default!;
     }
 }
