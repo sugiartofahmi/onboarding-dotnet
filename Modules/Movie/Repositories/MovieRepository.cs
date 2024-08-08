@@ -6,7 +6,6 @@ using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Movie;
 using onboarding_backend.Interfaces;
 using onboarding_backend.Modules.Movie.Responses;
-using Sprache;
 
 namespace onboarding_backend.Modules.Movie.Repositories
 {

@@ -14,6 +14,14 @@ namespace onboarding_backend
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+            Config.JwtSecret = builder.Configuration.GetConnectionString("JWT:Secret");
+            Config.JwtIssuer = builder.Configuration.GetConnectionString("JWT:Issuer");
+            Config.JwtAudience = builder.Configuration.GetConnectionString("JWT:Audience");
+            Config.TmdbApiKey = builder.Configuration.GetConnectionString("Tmdb:ApiKey");
+            Config.TmdbBaseUrl = builder.Configuration.GetConnectionString("Tmdb:BaseUrl");
+            Config.TmdbPosterUrl = builder.Configuration.GetConnectionString("Tmdb:PosterUrl");
 
             builder.Services.AddControllers().AddJsonOptions(options =>
             {
@@ -25,7 +33,7 @@ namespace onboarding_backend
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlServer(Config.ConnectionString);
+                options.UseSqlServer(ConnectionString);
             });
             builder.Services.AddAuthorization();
             builder.Services.AddAuthentication(options =>

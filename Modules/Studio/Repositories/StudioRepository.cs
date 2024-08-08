@@ -5,7 +5,6 @@ using onboarding_backend.Database.Entities;
 using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Studio;
 using onboarding_backend.Interfaces;
-using Sprache;
 
 namespace onboarding_backend.Modules.Studio.Repositories
 {
