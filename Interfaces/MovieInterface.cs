@@ -8,7 +8,7 @@ namespace onboarding_backend.Interfaces
         public string Overview { get; set; }
         public string Poster { get; set; }
         public DateTime PlayUntil { get; set; }
-        public ICollection<MovieSchedule> Schedules { get; }
-        public List<Tag> Tags { get; }
+        public ICollection<MovieScheduleEntity> Schedules { get; }
+        public List<TagEntity> Tags { get; }
     }
 }

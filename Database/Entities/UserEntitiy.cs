@@ -6,7 +6,7 @@ using onboarding_backend.Interfaces;
 namespace onboarding_backend.Database.Entities
 {
     [Table("users")]
-    public class User : Base, IUser
+    public class UserEntity : BaseEntity, IUser
     {
         [Required]
         public string Name { get; set; }
@@ -23,7 +23,7 @@ namespace onboarding_backend.Database.Entities
         public bool IsAdmin { get; set; } = false;
 
         [JsonIgnore]
-        public ICollection<Order>? Orders { get; } = new List<Order>();
+        public ICollection<OrderEntity>? Orders { get; } = new List<OrderEntity>();
 
     }
 }

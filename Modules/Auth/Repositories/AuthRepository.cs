@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using onboarding_backend.Common.Utils;
 using onboarding_backend.Database;
+using onboarding_backend.Database.Entities;
 using onboarding_backend.Dtos.Auth;
 using onboarding_backend.Interfaces;
 
@@ -17,7 +18,7 @@ namespace onboarding_backend.Modules.Auth.Repositories
 
         public async Task<bool> AddUser(RegisterDto data)
         {
-            var user = new Database.Entities.User
+            var user = new UserEntity
             {
                 Email = data.Email,
                 Password = PasswordUtils.HashPassword(data.Password),

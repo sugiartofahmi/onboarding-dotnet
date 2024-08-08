@@ -41,7 +41,7 @@ namespace onboarding_backend.Modules.Schedule.Repositories
 
         public async Task Create(ScheduleCreateDto data)
         {
-            var schedule = new MovieSchedule
+            var schedule = new MovieScheduleEntity
             {
                 Price = data.Price,
                 MovieId = data.MovieId,

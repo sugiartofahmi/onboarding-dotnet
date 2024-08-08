@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using onboarding_backend.Common.Responses;
 using onboarding_backend.Database;
+using onboarding_backend.Database.Entities;
 using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Tag;
 using onboarding_backend.Interfaces;
@@ -27,7 +28,7 @@ namespace onboarding_backend.Modules.Tag.Repositories
            .Take(request.PerPage)
            .ToListAsync();
             var httpContext = _httpContextAccessor.HttpContext;
-            string baseUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}{httpContext.Request.PathBase}{httpContext.Request.Path}";
+            string baseUrl = $"{httpContext?.Request.Scheme}://{httpContext?.Request.Host}{httpContext?.Request.PathBase}{httpContext?.Request.Path}";
             return new PaginateResponse<ITag>
             {
                 Items = items.Cast<ITag>().ToList(),
@@ -46,7 +47,7 @@ namespace onboarding_backend.Modules.Tag.Repositories
 
         public async Task Create(TagCreateDto data)
         {
-            var tag = new Database.Entities.Tag
+            var tag = new TagEntity
             {
                 Name = data.Name
             };

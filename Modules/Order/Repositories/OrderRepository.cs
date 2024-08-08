@@ -45,7 +45,7 @@ namespace onboarding_backend.Modules.Order.Repositories
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
             {
-                var order = new Database.Entities.Order
+                var order = new OrderEntity
                 {
                     UserId = userId,
                     PaymentMethod = data.PaymentMethod,
@@ -68,7 +68,7 @@ namespace onboarding_backend.Modules.Order.Repositories
                     }
 
                     double subTotalPrice = movieSchedule.Price * item.Quantity;
-                    var orderItem = new OrderItem
+                    var orderItem = new OrderItemEntity
                     {
                         OrderId = order.Id,
                         MovieScheduleId = item.MovieScheduleId,

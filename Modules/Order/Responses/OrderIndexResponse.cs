@@ -1,3 +1,4 @@
+using onboarding_backend.Database.Entities;
 using onboarding_backend.Interfaces;
 
 namespace onboarding_backend.Modules.Order.Responses
@@ -10,16 +11,16 @@ namespace onboarding_backend.Modules.Order.Responses
         public double TotalItemPrice { get; set; }
         public List<OrderItemResponse> Item { get; set; }
 
-        public static OrderIndexResponse FromEntity(Database.Entities.Order order)
+        public static OrderIndexResponse FromEntity(OrderEntity order)
         {
             return new OrderIndexResponse
             {
                 id = order.Id,
-                user = order.User != null ? new UserOrderResponse
+                user = new UserOrderResponse
                 {
                     Id = order.User.Id,
                     Name = order.User.Name
-                } : null,
+                },
                 PaymentMethod = order.PaymentMethod,
                 TotalItemPrice = order.TotalItemPrice,
                 Item = order?.Items?.Select(items => new OrderItemResponse
@@ -31,7 +32,7 @@ namespace onboarding_backend.Modules.Order.Responses
             };
         }
 
-        public static List<OrderIndexResponse> FromEntities(List<Database.Entities.Order> datas)
+        public static List<OrderIndexResponse> FromEntities(List<OrderEntity> datas)
         {
             return datas.Select(FromEntity).ToList();
         }

@@ -6,17 +6,17 @@ using onboarding_backend.Interfaces;
 namespace onboarding_backend.Database.Entities
 {
     [Table("orders")]
-    public class Order : Base, IOrder
+    public class OrderEntity : BaseEntity, IOrder
     {
         [Required]
         public int UserId { get; set; }
-        public User User { get; set; } = null!;
+        public UserEntity User { get; set; } = null!;
 
         [Required]
         public PaymentMethodEnum PaymentMethod { get; set; }
 
         [Required]
         public double TotalItemPrice { get; set; }
-        public ICollection<OrderItem> Items { get; } = new List<OrderItem>();
+        public ICollection<OrderItemEntity> Items { get; } = new List<OrderItemEntity>();
     }
 }

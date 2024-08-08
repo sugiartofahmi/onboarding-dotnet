@@ -4,7 +4,7 @@ namespace onboarding_backend.Interfaces
 {
     public interface IMovieTag : IBase
     {
-        public Movie Movie { get; set; }
-        public Tag Tag { get; set; }
+        public MovieEntity Movie { get; set; }
+        public TagEntity Tag { get; set; }
     }
 }

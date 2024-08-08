@@ -7,18 +7,18 @@ using onboarding_backend.Interfaces;
 namespace onboarding_backend.Database.Entities
 {
     [Table("movie_schedules")]
-    public class MovieSchedule : Base, IMovieSchedule
+    public class MovieScheduleEntity : BaseEntity, IMovieSchedule
     {
 
         [Required]
         public int MovieId { get; set; }
 
         [JsonIgnore]
-        public Movie Movie { get; set; } = null!;
+        public MovieEntity Movie { get; set; } = null!;
 
         [Required]
         public int StudioId { get; set; }
-        public Studio Studio { get; set; } = null!;
+        public StudioEntity Studio { get; set; } = null!;
 
         [Required]
         public double Price { get; set; }
@@ -33,8 +33,7 @@ namespace onboarding_backend.Database.Entities
         public string EndTime { get; set; }
 
 
-
-        public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+        public List<OrderItemEntity> OrderItems { get; set; } = new List<OrderItemEntity>();
 
     }
 }

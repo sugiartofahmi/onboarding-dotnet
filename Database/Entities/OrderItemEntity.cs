@@ -7,18 +7,18 @@ using onboarding_backend.Interfaces;
 namespace onboarding_backend.Database.Entities
 {
     [Table("order_items")]
-    public class OrderItem : Base, IOrderItem
+    public class OrderItemEntity : BaseEntity, IOrderItem
     {
         [Required]
         public int OrderId { get; set; }
 
         [JsonIgnore]
-        public Order Order { get; set; } = null!;
+        public OrderEntity Order { get; set; } = null!;
 
         [Required]
         public int MovieScheduleId { get; set; }
         [JsonIgnore]
-        public MovieSchedule MovieSchedule { get; set; } = null!;
+        public MovieScheduleEntity MovieSchedule { get; set; } = null!;
 
         [Required]
         public int Quantity { get; set; }

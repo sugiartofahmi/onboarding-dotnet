@@ -7,7 +7,7 @@ using onboarding_backend.Interfaces;
 namespace onboarding_backend.Database.Entities
 {
     [Table("studios")]
-    public class Studio : Base, IStudio
+    public class StudioEntity : BaseEntity, IStudio
     {
         [Required]
         public int StudioNumber { get; set; }
@@ -16,7 +16,7 @@ namespace onboarding_backend.Database.Entities
         public int SeatCapacity { get; set; }
 
         [JsonIgnore]
-        public ICollection<MovieSchedule> MovieSchedules { get; } = new List<MovieSchedule>();
+        public ICollection<MovieScheduleEntity> MovieSchedules { get; } = new List<MovieScheduleEntity>();
 
     }
 }

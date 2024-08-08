@@ -6,13 +6,13 @@ using onboarding_backend.Interfaces;
 namespace onboarding_backend.Database.Entities
 {
     [Table("tags")]
-    public class Tag : Base, ITag
+    public class TagEntity : BaseEntity, ITag
     {
         [Required]
         public string Name { get; set; }
 
         [JsonIgnore]
-        public List<Movie> Movies { get; } = [];
+        public List<MovieEntity> Movies { get; } = [];
 
     }
 }

@@ -11,7 +11,7 @@ namespace onboarding_backend.Modules.Movie.Responses
         public string Overview { get; set; }
         public string Poster { get; set; }
 
-        public List<Database.Entities.Tag> Tags { get; set; }
+        public List<TagEntity> Tags { get; set; }
         public List<ScheduleResponse> Schedules { get; set; }
 
         public static MovieIndexResponse FromEntity(IMovie data)
@@ -36,7 +36,7 @@ namespace onboarding_backend.Modules.Movie.Responses
             };
         }
 
-        private static int CalculateSeatRemaining(MovieSchedule schedule)
+        private static int CalculateSeatRemaining(MovieScheduleEntity schedule)
         {
             int totalSeats = schedule.Studio.SeatCapacity;
             int bookedSeats = schedule.OrderItems?.Sum(order => order.Quantity) ?? 0;

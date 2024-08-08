@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using onboarding_backend.Common.Responses;
 using onboarding_backend.Database;
+using onboarding_backend.Database.Entities;
 using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Movie;
 using onboarding_backend.Interfaces;
@@ -52,7 +53,7 @@ namespace onboarding_backend.Modules.Movie.Repositories
 
         public async Task Create(MovieCreateDto data)
         {
-            var movie = new Database.Entities.Movie
+            var movie = new MovieEntity
             {
                 Title = data.Title,
                 Overview = data.Overview,
@@ -93,7 +94,7 @@ namespace onboarding_backend.Modules.Movie.Repositories
             await _context.Movies.Where(x => x.Id == id).ExecuteDeleteAsync();
         }
 
-        public async Task<List<Database.Entities.Movie>> FindAll()
+        public async Task<List<MovieEntity>> FindAll()
         {
             return await _context.Movies.ToListAsync();
         }

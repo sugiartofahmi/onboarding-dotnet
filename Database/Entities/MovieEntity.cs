@@ -6,7 +6,7 @@ using onboarding_backend.Interfaces;
 namespace onboarding_backend.Database.Entities
 {
     [Table("movies")]
-    public class Movie : Base, IMovie
+    public class MovieEntity : BaseEntity, IMovie
     {
 
         [Required]
@@ -20,7 +20,7 @@ namespace onboarding_backend.Database.Entities
 
         [Required]
         public DateTime PlayUntil { get; set; }
-        public ICollection<MovieSchedule> Schedules { get; } = new List<MovieSchedule>();
-        public List<Tag> Tags { get; } = [];
+        public ICollection<MovieScheduleEntity> Schedules { get; } = new List<MovieScheduleEntity>();
+        public List<TagEntity> Tags { get; } = [];
     }
 }
