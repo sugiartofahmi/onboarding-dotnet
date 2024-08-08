@@ -12,6 +12,7 @@ namespace onboarding_backend.Modules.Auth.Controllers
     public class AuthController(AuthService authService) : ControllerBase
     {
         private readonly AuthService _authService = authService;
+
         [HttpPost("login")]
         public async Task<ActionResult<ApiResponse>> Login([FromBody] LoginDto request)
         {
@@ -24,16 +25,14 @@ namespace onboarding_backend.Modules.Auth.Controllers
                 Avatar = user.Avatar,
                 Token = token
             };
-            return new ApiResponse(data: mapUser, success: true, message: "Success");
+            return new ApiResponse(data: mapUser, success: true, message: "Login Success");
         }
 
         [HttpPost("register")]
         public async Task<ActionResult<ApiResponse>> Register([FromBody] RegisterDto request)
         {
             await _authService.Register(request);
-            return new ApiResponse(success: true, message: "Success");
-
+            return new ApiResponse(success: true, message: "Register Success");
         }
-
     }
 }

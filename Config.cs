@@ -1,11 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace onboarding_backend
 {
-
     public static class Config
     {
         public static string JwtSecret { get; set; } = string.Empty;
@@ -14,6 +8,5 @@ namespace onboarding_backend
         public static string TmdbApiKey { get; set; } = string.Empty;
         public static string TmdbBaseUrl { get; set; } = string.Empty;
         public static string TmdbPosterUrl { get; set; } = string.Empty;
-
     }
 }
