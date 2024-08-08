@@ -7,7 +7,10 @@ namespace onboarding_backend.Common.Validators
     {
         private const int MinimumLength = 8;
 
-        protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
+        protected override ValidationResult IsValid(
+            object? value,
+            ValidationContext validationContext
+        )
         {
             var password = value as string;
 
@@ -23,16 +26,19 @@ namespace onboarding_backend.Common.Validators
 
             if (!password.Any(char.IsUpper))
             {
-                return new ValidationResult("Password harus mengandung setidaknya satu huruf kapital");
+                return new ValidationResult(
+                    "Password harus mengandung setidaknya satu huruf kapital"
+                );
             }
 
             if (!Regex.IsMatch(password, @"[\W_]"))
             {
-                return new ValidationResult("Password harus mengandung setidaknya satu karakter alfanumerik");
+                return new ValidationResult(
+                    "Password harus mengandung setidaknya satu karakter alfanumerik"
+                );
             }
 
-            return ValidationResult.Success;
+            return ValidationResult.Success!;
         }
-
     }
 }

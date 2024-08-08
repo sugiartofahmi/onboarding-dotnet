@@ -17,14 +17,15 @@ namespace onboarding_backend.Modules.Transaction.Controllers
         [HttpPost]
         public async Task<ActionResult> Create([FromBody] OrderCreateDto request)
         {
-            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            await _orderService.Create(request, userId);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId is null)
+            {
+                return Unauthorized();
+            }
+            await _orderService.Create(request, int.Parse(userId));
             var response = new ApiResponse(success: true, message: "Success");
 
             return Ok(response);
-
         }
-
-
     }
 }

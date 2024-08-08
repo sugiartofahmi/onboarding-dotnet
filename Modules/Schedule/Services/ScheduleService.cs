@@ -19,7 +19,8 @@ namespace onboarding_backend.Modules.Schedule.Services
         {
             var movie = await FindOne(id);
 
-            if (movie is null) return false;
+            if (movie is null)
+                return false;
 
             await _scheduleRepository.Delete(id);
 
@@ -30,17 +31,17 @@ namespace onboarding_backend.Modules.Schedule.Services
         {
             var movie = await FindOne(id);
 
-            if (movie is null) return false;
+            if (movie is null)
+                return false;
 
             await _scheduleRepository.Update(movie, data);
 
             return true;
         }
 
-        public async Task<IMovieSchedule> FindOne(int id)
+        public async Task<IMovieSchedule?> FindOne(int id)
         {
             return await _scheduleRepository.FindOne(id);
         }
-
     }
 }

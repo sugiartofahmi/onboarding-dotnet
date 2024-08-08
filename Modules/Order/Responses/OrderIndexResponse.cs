@@ -6,29 +6,28 @@ namespace onboarding_backend.Modules.Order.Responses
     public class OrderIndexResponse
     {
         public int id { get; set; }
-        public UserOrderResponse user { get; set; }
+        public UserOrderResponse user { get; set; } = default!;
         public PaymentMethodEnum PaymentMethod { get; set; }
         public double TotalItemPrice { get; set; }
-        public List<OrderItemResponse> Item { get; set; }
+        public List<OrderItemResponse> Item { get; set; } = [];
 
         public static OrderIndexResponse FromEntity(OrderEntity order)
         {
             return new OrderIndexResponse
             {
                 id = order.Id,
-                user = new UserOrderResponse
-                {
-                    Id = order.User.Id,
-                    Name = order.User.Name
-                },
+                user = new UserOrderResponse { Id = order.User.Id, Name = order.User.Name },
                 PaymentMethod = order.PaymentMethod,
                 TotalItemPrice = order.TotalItemPrice,
-                Item = order?.Items?.Select(items => new OrderItemResponse
-                {
-                    Id = items.Id,
-                    MovieScheduleId = items.MovieScheduleId,
-                    Quantity = items.Quantity
-                }).ToList() ?? new List<OrderItemResponse>()
+                Item =
+                    order
+                        ?.Items?.Select(items => new OrderItemResponse
+                        {
+                            Id = items.Id,
+                            MovieScheduleId = items.MovieScheduleId,
+                            Quantity = items.Quantity
+                        })
+                        .ToList() ?? new List<OrderItemResponse>()
             };
         }
 
@@ -36,8 +35,6 @@ namespace onboarding_backend.Modules.Order.Responses
         {
             return datas.Select(FromEntity).ToList();
         }
-
-
     }
 
     public class OrderItemResponse
@@ -50,7 +47,6 @@ namespace onboarding_backend.Modules.Order.Responses
     public class UserOrderResponse
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-
+        public string Name { get; set; } = string.Empty;
     }
 }

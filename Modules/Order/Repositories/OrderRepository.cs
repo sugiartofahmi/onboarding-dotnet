@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using onboarding_backend.Common.Responses;
 using onboarding_backend.Database;
@@ -13,25 +14,30 @@ namespace onboarding_backend.Modules.Order.Repositories
     {
         private readonly IHttpContextAccessor _httpContextAccessor = _httpContextAccessor;
         private readonly AppDbContext _context = context;
+
         public async Task<PaginateResponse<OrderIndexResponse>> Pagination(IndexDto request)
         {
+            var httpContext = _httpContextAccessor.HttpContext;
             var query = _context.Orders.Include(i => i.User).Include(i => i.Items).AsQueryable();
             var totalItems = await query.CountAsync();
             var totalPages = (int)Math.Ceiling(totalItems / (double)request.PerPage);
             var items = await query
-       .Skip((request.Page - 1) * request.PerPage)
-       .Take(request.PerPage)
-       .ToListAsync();
-            var httpContext = _httpContextAccessor.HttpContext;
-            string baseUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}{httpContext.Request.PathBase}{httpContext.Request.Path}";
+                .Skip((request.Page - 1) * request.PerPage)
+                .Take(request.PerPage)
+                .ToListAsync();
+            string baseUrl =
+                $"{httpContext?.Request.Scheme}://{httpContext?.Request.Host}{httpContext?.Request.PathBase}{httpContext?.Request.Path}";
+
             return new PaginateResponse<OrderIndexResponse>
             {
                 Items = OrderIndexResponse.FromEntities(items),
-                Pagination = new PaginationMeta(page: request.Page,
+                Pagination = new PaginationMeta(
+                    page: request.Page,
                     perPage: request.PerPage,
                     totalItems: totalItems,
                     totalPages: totalPages,
-                    baseUrl: baseUrl)
+                    baseUrl: baseUrl
+                )
             };
         }
 
@@ -59,15 +65,19 @@ namespace onboarding_backend.Modules.Order.Repositories
 
                 foreach (var item in data.Items)
                 {
-                    var movieSchedule = await _context.MovieSchedules
-                        .FirstOrDefaultAsync(x => x.Id == item.MovieScheduleId);
+                    var movieSchedule = await _context.MovieSchedules.FirstOrDefaultAsync(x =>
+                        x.Id == item.MovieScheduleId
+                    );
 
                     if (movieSchedule == null)
                     {
-                        throw new Exception($"MovieSchedule with ID {item.MovieScheduleId} not found.");
+                        throw new Exception(
+                            $"MovieSchedule with ID {item.MovieScheduleId} not found."
+                        );
                     }
 
                     double subTotalPrice = movieSchedule.Price * item.Quantity;
+
                     var orderItem = new OrderItemEntity
                     {
                         OrderId = order.Id,
@@ -88,25 +98,21 @@ namespace onboarding_backend.Modules.Order.Repositories
             catch (Exception)
             {
                 await transaction.RollbackAsync();
-                throw;
+                throw new Exception("Failed to create order.");
             }
-
         }
 
         public async Task Update(IOrder order, OrderUpdateDto data)
         {
             order.PaymentMethod = data.PaymentMethod;
 
-
             _context.Entry(order).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-
         }
 
         public async Task Delete(int id)
         {
             await _context.Orders.Where(x => x.Id == id).ExecuteDeleteAsync();
         }
-
     }
 }

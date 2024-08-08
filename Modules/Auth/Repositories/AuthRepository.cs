@@ -30,6 +30,5 @@ namespace onboarding_backend.Modules.Auth.Repositories
 
             return true;
         }
-
     }
 }

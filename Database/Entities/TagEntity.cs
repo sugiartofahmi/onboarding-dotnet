@@ -9,10 +9,9 @@ namespace onboarding_backend.Database.Entities
     public class TagEntity : BaseEntity, ITag
     {
         [Required]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         [JsonIgnore]
         public List<MovieEntity> Movies { get; } = [];
-
     }
 }

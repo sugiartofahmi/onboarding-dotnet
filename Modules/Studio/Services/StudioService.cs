@@ -24,7 +24,8 @@ namespace onboarding_backend.Modules.Studio.Services
         {
             var movie = await _studioRepository.FindOne(id);
 
-            if (movie is null) return false;
+            if (movie is null)
+                return false;
 
             await _studioRepository.Delete(id);
 
@@ -35,17 +36,17 @@ namespace onboarding_backend.Modules.Studio.Services
         {
             var movie = await _studioRepository.FindOne(id);
 
-            if (movie is null) return false;
+            if (movie is null)
+                return false;
 
             await _studioRepository.Update(movie, data);
 
             return true;
         }
 
-        public async Task<IStudio> FindOne(int id)
+        public async Task<IStudio?> FindOne(int id)
         {
             return await _studioRepository.FindOne(id);
         }
-
     }
 }

@@ -39,13 +39,11 @@ namespace onboarding_backend.Modules.Schedule.Repositories
 
             _context.Entry(movieSchedule).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-
         }
 
         public async Task Delete(int id)
         {
             await _context.Tags.Where(x => x.Id == id).ExecuteDeleteAsync();
         }
-
     }
 }

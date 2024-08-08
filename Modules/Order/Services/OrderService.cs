@@ -25,7 +25,8 @@ namespace onboarding_backend.Modules.Order.Services
         {
             var movie = await _orderRepository.FindOne(id);
 
-            if (movie is null) return false;
+            if (movie is null)
+                return false;
 
             await _orderRepository.Delete(id);
 
@@ -36,17 +37,17 @@ namespace onboarding_backend.Modules.Order.Services
         {
             var movie = await _orderRepository.FindOne(id);
 
-            if (movie is null) return false;
+            if (movie is null)
+                return false;
 
             await _orderRepository.Update(movie, data);
 
             return true;
         }
 
-        public async Task<IOrder> FindOne(int id)
+        public async Task<IOrder?> FindOne(int id)
         {
             return await _orderRepository.FindOne(id);
         }
-
     }
 }

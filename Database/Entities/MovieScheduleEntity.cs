@@ -3,13 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using onboarding_backend.Interfaces;
 
-
 namespace onboarding_backend.Database.Entities
 {
     [Table("movie_schedules")]
     public class MovieScheduleEntity : BaseEntity, IMovieSchedule
     {
-
         [Required]
         public int MovieId { get; set; }
 
@@ -27,13 +25,11 @@ namespace onboarding_backend.Database.Entities
         public DateTime Date { get; set; }
 
         [Required]
-        public string StartTime { get; set; }
+        public string StartTime { get; set; } = string.Empty;
 
         [Required]
-        public string EndTime { get; set; }
-
+        public string EndTime { get; set; } = string.Empty;
 
         public List<OrderItemEntity> OrderItems { get; set; } = new List<OrderItemEntity>();
-
     }
 }

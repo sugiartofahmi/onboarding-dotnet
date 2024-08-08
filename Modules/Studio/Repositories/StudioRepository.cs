@@ -12,26 +12,30 @@ namespace onboarding_backend.Modules.Studio.Repositories
     {
         private readonly IHttpContextAccessor _httpContextAccessor = _httpContextAccessor;
         private readonly AppDbContext _context = context;
+
         public async Task<PaginateResponse<IStudio>> Pagination(IndexDto request)
         {
+            var httpContext = _httpContextAccessor.HttpContext;
             var query = _context.Studios.AsQueryable();
             var totalItems = await query.CountAsync();
             var totalPages = (int)Math.Ceiling(totalItems / (double)request.PerPage);
-
             var items = await query
-           .Skip((request.Page - 1) * request.PerPage)
-           .Take(request.PerPage)
-           .ToListAsync();
-            var httpContext = _httpContextAccessor.HttpContext;
-            string baseUrl = $"{httpContext?.Request.Scheme}://{httpContext?.Request.Host}{httpContext?.Request.PathBase}{httpContext?.Request.Path}";
+                .Skip((request.Page - 1) * request.PerPage)
+                .Take(request.PerPage)
+                .ToListAsync();
+            string baseUrl =
+                $"{httpContext?.Request.Scheme}://{httpContext?.Request.Host}{httpContext?.Request.PathBase}{httpContext?.Request.Path}";
+
             return new PaginateResponse<IStudio>
             {
                 Items = items.Cast<IStudio>().ToList(),
-                Pagination = new PaginationMeta(page: request.Page,
+                Pagination = new PaginationMeta(
+                    page: request.Page,
                     perPage: request.PerPage,
                     totalItems: totalItems,
                     totalPages: totalPages,
-                    baseUrl: baseUrl)
+                    baseUrl: baseUrl
+                )
             };
         }
 
@@ -59,14 +63,11 @@ namespace onboarding_backend.Modules.Studio.Repositories
 
             _context.Entry(studio).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-
         }
 
         public async Task Delete(int id)
         {
             await _context.Studios.Where(x => x.Id == id).ExecuteDeleteAsync();
         }
-
-
     }
 }

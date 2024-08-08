@@ -13,10 +13,18 @@ namespace onboarding_backend.Modules.Movie.Repositories
     {
         private readonly IHttpContextAccessor _httpContextAccessor = _httpContextAccessor;
         private readonly AppDbContext _context = context;
+
         public async Task<PaginateResponse<MovieIndexResponse>> Pagination(IndexDto request)
         {
-            var query = _context.Movies.Include(m => m.Tags).Include(m => m.Schedules).ThenInclude(s => s.Studio).Include(m => m.Schedules)
-            .ThenInclude(s => s.OrderItems).AsQueryable();
+            var httpContext = _httpContextAccessor.HttpContext;
+            var query = _context
+                .Movies.Include(m => m.Tags)
+                .Include(m => m.Schedules)
+                .ThenInclude(s => s.Studio)
+                .Include(m => m.Schedules)
+                .ThenInclude(s => s.OrderItems)
+                .AsQueryable();
+
             if (request.Search != null)
             {
                 query = query.Where(i => EF.Functions.Like(i.Title, "%" + request.Search + "%"));
@@ -24,26 +32,25 @@ namespace onboarding_backend.Modules.Movie.Repositories
 
             var totalItems = await query.CountAsync();
             var totalPages = (int)Math.Ceiling(totalItems / (double)request.PerPage);
-
             var items = await query
-           .Skip((request.Page - 1) * request.PerPage)
-           .Take(request.PerPage)
-           .ToListAsync();
+                .Skip((request.Page - 1) * request.PerPage)
+                .Take(request.PerPage)
+                .ToListAsync();
+            string baseUrl =
+                $"{httpContext?.Request.Scheme}://{httpContext?.Request.Host}{httpContext?.Request.PathBase}{httpContext?.Request.Path}";
 
-            var httpContext = _httpContextAccessor.HttpContext;
-            string baseUrl = $"{httpContext?.Request.Scheme}://{httpContext?.Request.Host}{httpContext?.Request.PathBase}{httpContext?.Request.Path}";
             return new PaginateResponse<MovieIndexResponse>
             {
                 Items = MovieIndexResponse.FromEntities(items.Cast<IMovie>().ToList()),
-                Pagination = new PaginationMeta(page: request.Page,
+                Pagination = new PaginationMeta(
+                    page: request.Page,
                     perPage: request.PerPage,
                     totalItems: totalItems,
                     totalPages: totalPages,
-                    baseUrl: baseUrl)
+                    baseUrl: baseUrl
+                )
             };
         }
-
-
 
         public async Task<IMovie?> FindOne(int id)
         {
@@ -73,10 +80,9 @@ namespace onboarding_backend.Modules.Movie.Repositories
 
             movie.Tags.Clear();
 
-
-            var selectedTags = await _context.Tags
-        .Where(t => data.TagIds.Contains(t.Id))
-        .ToListAsync();
+            var selectedTags = await _context
+                .Tags.Where(t => data.TagIds.Contains(t.Id))
+                .ToListAsync();
 
             foreach (var tag in selectedTags)
             {
@@ -85,7 +91,6 @@ namespace onboarding_backend.Modules.Movie.Repositories
 
             _context.Entry(movie).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-
         }
 
         public async Task Delete(int id)
@@ -97,6 +102,5 @@ namespace onboarding_backend.Modules.Movie.Repositories
         {
             return await _context.Movies.ToListAsync();
         }
-
     }
 }

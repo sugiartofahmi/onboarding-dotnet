@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using onboarding_backend.Interfaces;
 
-
 namespace onboarding_backend.Database.Entities
 {
     [Table("order_items")]
@@ -17,6 +16,7 @@ namespace onboarding_backend.Database.Entities
 
         [Required]
         public int MovieScheduleId { get; set; }
+
         [JsonIgnore]
         public MovieScheduleEntity MovieSchedule { get; set; } = null!;
 
@@ -26,7 +26,6 @@ namespace onboarding_backend.Database.Entities
         [Required]
         public double SubTotalPrice { get; set; }
 
-        [Required]
-        public string Snapshots { get; set; } = default!;
+        public string? Snapshots { get; set; }
     }
 }
