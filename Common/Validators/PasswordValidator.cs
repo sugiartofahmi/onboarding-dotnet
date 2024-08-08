@@ -7,7 +7,7 @@ namespace onboarding_backend.Common.Validators
     {
         private const int MinimumLength = 8;
 
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
         {
             var password = value as string;
 

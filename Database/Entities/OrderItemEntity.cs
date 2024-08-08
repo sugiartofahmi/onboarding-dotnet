@@ -27,6 +27,6 @@ namespace onboarding_backend.Database.Entities
         public double SubTotalPrice { get; set; }
 
         [Required]
-        public string Snapshots { get; set; }
+        public string Snapshots { get; set; } = default!;
     }
 }

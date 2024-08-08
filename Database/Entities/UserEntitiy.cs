@@ -23,7 +23,7 @@ namespace onboarding_backend.Database.Entities
         public bool IsAdmin { get; set; } = false;
 
         [JsonIgnore]
-        public ICollection<OrderEntity>? Orders { get; } = new List<OrderEntity>();
+        public ICollection<OrderEntity> Orders { get; } = new List<OrderEntity>();
 
     }
 }
