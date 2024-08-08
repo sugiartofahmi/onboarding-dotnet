@@ -74,7 +74,7 @@ namespace onboarding_backend.Database
                .HasMany(e => e.Tags)
                .WithMany(e => e.Movies)
                .UsingEntity(
-                   "MovieTags",
+                   "movie_tags",
                    l => l.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagId").HasPrincipalKey(nameof(Tag.Id)),
                    r => r.HasOne(typeof(Movie)).WithMany().HasForeignKey("MovieId").HasPrincipalKey(nameof(Movie.Id)),
                    j => j.HasKey("MovieId", "TagId"));
