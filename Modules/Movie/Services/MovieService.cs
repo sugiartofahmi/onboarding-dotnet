@@ -43,7 +43,7 @@ namespace onboarding_backend.Modules.Movie.Services
             return true;
         }
 
-        public async Task<IMovie> FindOne(int id)
+        public async Task<IMovie?> FindOne(int id)
         {
             return await _movieRepository.FindOne(id);
         }

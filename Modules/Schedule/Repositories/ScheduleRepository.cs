@@ -8,31 +8,9 @@ using onboarding_backend.Interfaces;
 
 namespace onboarding_backend.Modules.Schedule.Repositories
 {
-    public class ScheduleRepository(AppDbContext context, IHttpContextAccessor _httpContextAccessor)
+    public class ScheduleRepository(AppDbContext context)
     {
-        private readonly IHttpContextAccessor _httpContextAccessor = _httpContextAccessor;
         private readonly AppDbContext _context = context;
-        public async Task<PaginateResponse<IMovieSchedule>> Pagination(IndexDto request)
-        {
-            var query = _context.MovieSchedules.Include(m => m.Movie).AsQueryable();
-            var totalItems = await query.CountAsync();
-            var totalPages = (int)Math.Ceiling(totalItems / (double)request.PerPage);
-            var items = await query
-         .Skip((request.Page - 1) * request.PerPage)
-         .Take(request.PerPage)
-         .ToListAsync();
-            var httpContext = _httpContextAccessor.HttpContext;
-            var baseUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}{httpContext.Request.PathBase}{httpContext.Request.Path}";
-            return new PaginateResponse<IMovieSchedule>
-            {
-                Items = items.Cast<IMovieSchedule>().ToList(),
-                Pagination = new PaginationMeta(page: request.Page,
-                    perPage: request.PerPage,
-                    totalItems: totalItems,
-                    totalPages: totalPages,
-                    baseUrl: baseUrl)
-            };
-        }
 
         public async Task<IMovieSchedule?> FindOne(int id)
         {

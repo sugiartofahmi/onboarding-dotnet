@@ -10,11 +10,6 @@ namespace onboarding_backend.Modules.Schedule.Services
     {
         private readonly ScheduleRepository _scheduleRepository = scheduleRepository;
 
-        public async Task<PaginateResponse<IMovieSchedule>> Pagination(IndexDto request)
-        {
-            return await _scheduleRepository.Pagination(request);
-        }
-
         public async Task Create(ScheduleCreateDto data)
         {
             await _scheduleRepository.Create(data);
