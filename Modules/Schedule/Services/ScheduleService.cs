@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using onboarding_backend.Common.Responses;
 using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Schedule;
@@ -14,11 +10,6 @@ namespace onboarding_backend.Modules.Schedule.Services
     {
         private readonly ScheduleRepository _scheduleRepository = scheduleRepository;
 
-        public async Task<PaginateResponse<IMovieSchedule>> Pagination(IndexDto request)
-        {
-            return await _scheduleRepository.Pagination(request);
-        }
-
         public async Task Create(ScheduleCreateDto data)
         {
             await _scheduleRepository.Create(data);
@@ -28,7 +19,8 @@ namespace onboarding_backend.Modules.Schedule.Services
         {
             var movie = await FindOne(id);
 
-            if (movie is null) return false;
+            if (movie is null)
+                return false;
 
             await _scheduleRepository.Delete(id);
 
@@ -39,17 +31,17 @@ namespace onboarding_backend.Modules.Schedule.Services
         {
             var movie = await FindOne(id);
 
-            if (movie is null) return false;
+            if (movie is null)
+                return false;
 
             await _scheduleRepository.Update(movie, data);
 
             return true;
         }
 
-        public async Task<IMovieSchedule> FindOne(int id)
+        public async Task<IMovieSchedule?> FindOne(int id)
         {
             return await _scheduleRepository.FindOne(id);
         }
-
     }
 }

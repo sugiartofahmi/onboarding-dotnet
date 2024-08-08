@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using onboarding_backend.Interfaces;
 
 namespace onboarding_backend.Database.Entities
 {
-    public class Base : IBase
+    public class BaseEntity : IBase
     {
         public int Id { get; set; }
         public DateTime? CreatedAt { get; set; }

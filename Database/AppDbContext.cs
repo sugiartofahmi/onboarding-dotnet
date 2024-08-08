@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using onboarding_backend.Database.Entities;
 using onboarding_backend.Database.Seeders;
@@ -13,13 +9,13 @@ namespace onboarding_backend.Database
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Tag> Tags { get; set; }
-        public DbSet<Studio> Studios { get; set; }
-        public DbSet<OrderItem> OrderItems { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<MovieSchedule> MovieSchedules { get; set; }
-        public DbSet<Movie> Movies { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
+        public DbSet<TagEntity> Tags { get; set; }
+        public DbSet<StudioEntity> Studios { get; set; }
+        public DbSet<OrderItemEntity> OrderItems { get; set; }
+        public DbSet<OrderEntity> Orders { get; set; }
+        public DbSet<MovieScheduleEntity> MovieSchedules { get; set; }
+        public DbSet<MovieEntity> Movies { get; set; }
 
         public override int SaveChanges()
         {
@@ -38,17 +34,17 @@ namespace onboarding_backend.Database
         {
             var entries = ChangeTracker
                 .Entries()
-                .Where(e => e.Entity is Base && (
+                .Where(e => e.Entity is BaseEntity && (
                         e.State == EntityState.Added
                         || e.State == EntityState.Modified));
 
             foreach (var entityEntry in entries)
             {
-                ((Base)entityEntry.Entity).UpdatedAt = DateTime.Now;
+                ((BaseEntity)entityEntry.Entity).UpdatedAt = DateTime.Now;
 
                 if (entityEntry.State == EntityState.Added)
                 {
-                    ((Base)entityEntry.Entity).CreatedAt = DateTime.Now;
+                    ((BaseEntity)entityEntry.Entity).CreatedAt = DateTime.Now;
                 }
             }
         }
@@ -58,29 +54,29 @@ namespace onboarding_backend.Database
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<UserEntity>()
                            .HasQueryFilter(m => m.DeletedAt == null);
-            modelBuilder.Entity<Tag>()
+            modelBuilder.Entity<TagEntity>()
             .HasQueryFilter(m => m.DeletedAt == null);
-            modelBuilder.Entity<Studio>()
+            modelBuilder.Entity<StudioEntity>()
            .HasQueryFilter(m => m.DeletedAt == null);
-            modelBuilder.Entity<OrderItem>()
+            modelBuilder.Entity<OrderItemEntity>()
             .HasQueryFilter(m => m.DeletedAt == null);
-            modelBuilder.Entity<Order>()
+            modelBuilder.Entity<OrderEntity>()
            .HasQueryFilter(m => m.DeletedAt == null);
 
-            modelBuilder.Entity<MovieSchedule>()
+            modelBuilder.Entity<MovieScheduleEntity>()
           .HasQueryFilter(m => m.DeletedAt == null);
-            modelBuilder.Entity<Movie>()
+            modelBuilder.Entity<MovieEntity>()
                 .HasQueryFilter(m => m.DeletedAt == null);
 
-            modelBuilder.Entity<Movie>()
+            modelBuilder.Entity<MovieEntity>()
                .HasMany(e => e.Tags)
                .WithMany(e => e.Movies)
                .UsingEntity(
-                   "MovieTags",
-                   l => l.HasOne(typeof(Tag)).WithMany().HasForeignKey("TagId").HasPrincipalKey(nameof(Tag.Id)),
-                   r => r.HasOne(typeof(Movie)).WithMany().HasForeignKey("MovieId").HasPrincipalKey(nameof(Movie.Id)),
+                   "movie_tags",
+                   l => l.HasOne(typeof(TagEntity)).WithMany().HasForeignKey("TagId").HasPrincipalKey(nameof(TagEntity.Id)),
+                   r => r.HasOne(typeof(MovieEntity)).WithMany().HasForeignKey("MovieId").HasPrincipalKey(nameof(MovieEntity.Id)),
                    j => j.HasKey("MovieId", "TagId"));
 
             new StudioSeeder(modelBuilder);

@@ -1,17 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using onboarding_backend.Common.Responses;
 using onboarding_backend.Database;
+using onboarding_backend.Database.Entities;
 using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Studio;
-using onboarding_backend.Dtos.Tag;
 using onboarding_backend.Interfaces;
-using Sprache;
 
 namespace onboarding_backend.Modules.Studio.Repositories
 {
@@ -19,35 +12,30 @@ namespace onboarding_backend.Modules.Studio.Repositories
     {
         private readonly IHttpContextAccessor _httpContextAccessor = _httpContextAccessor;
         private readonly AppDbContext _context = context;
+
         public async Task<PaginateResponse<IStudio>> Pagination(IndexDto request)
         {
+            var httpContext = _httpContextAccessor.HttpContext;
             var query = _context.Studios.AsQueryable();
             var totalItems = await query.CountAsync();
             var totalPages = (int)Math.Ceiling(totalItems / (double)request.PerPage);
-
             var items = await query
-           .Skip((request.Page - 1) * request.PerPage)
-           .Take(request.PerPage)
-           .ToListAsync();
-            var httpContext = _httpContextAccessor.HttpContext;
-            var baseUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}{httpContext.Request.PathBase}{httpContext.Request.Path}";
+                .Skip((request.Page - 1) * request.PerPage)
+                .Take(request.PerPage)
+                .ToListAsync();
+            string baseUrl =
+                $"{httpContext?.Request.Scheme}://{httpContext?.Request.Host}{httpContext?.Request.PathBase}{httpContext?.Request.Path}";
 
             return new PaginateResponse<IStudio>
             {
                 Items = items.Cast<IStudio>().ToList(),
-                Pagination = new PaginationMeta
-                {
-                    Page = request.Page,
-                    PerPage = request.PerPage,
-                    TotalItems = totalItems,
-                    TotalPages = totalPages,
-                    NextPageLink = request.Page < totalPages
-                    ? $"{baseUrl}?Page={request.Page + 1}&PerPage={request.PerPage}"
-                    : null,
-                    PreviousPageLink = request.Page > 1
-                    ? $"{baseUrl}?Page={request.Page - 1}&PerPage={request.PerPage}"
-                    : null
-                }
+                Pagination = new PaginationMeta(
+                    page: request.Page,
+                    perPage: request.PerPage,
+                    totalItems: totalItems,
+                    totalPages: totalPages,
+                    baseUrl: baseUrl
+                )
             };
         }
 
@@ -58,7 +46,7 @@ namespace onboarding_backend.Modules.Studio.Repositories
 
         public async Task Create(StudioCreateDto data)
         {
-            var studio = new Database.Entities.Studio
+            var studio = new StudioEntity
             {
                 StudioNumber = data.StudioNumber,
                 SeatCapacity = data.SeatCapacity
@@ -75,14 +63,11 @@ namespace onboarding_backend.Modules.Studio.Repositories
 
             _context.Entry(studio).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-
         }
 
         public async Task Delete(int id)
         {
             await _context.Studios.Where(x => x.Id == id).ExecuteDeleteAsync();
         }
-
-
     }
 }

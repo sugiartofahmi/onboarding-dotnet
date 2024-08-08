@@ -1,20 +1,17 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using onboarding_backend.Interfaces;
 
 namespace onboarding_backend.Database.Entities
 {
-    public class Tag : Base, ITag
+    [Table("tags")]
+    public class TagEntity : BaseEntity, ITag
     {
         [Required]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         [JsonIgnore]
-        public List<Movie> Movies { get; } = [];
-
+        public List<MovieEntity> Movies { get; } = [];
     }
 }

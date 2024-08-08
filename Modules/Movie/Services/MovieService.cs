@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using onboarding_backend.Common.Requests;
 using onboarding_backend.Common.Responses;
 using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Movie;
@@ -48,7 +43,7 @@ namespace onboarding_backend.Modules.Movie.Services
             return true;
         }
 
-        public async Task<IMovie> FindOne(int id)
+        public async Task<IMovie?> FindOne(int id)
         {
             return await _movieRepository.FindOne(id);
         }

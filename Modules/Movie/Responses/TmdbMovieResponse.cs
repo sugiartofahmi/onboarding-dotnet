@@ -1,21 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace onboarding_backend.Modules.Movie.Responses
 {
     public class TmdbMovieResponse
     {
         [JsonPropertyName("dates")]
-        public Dates Dates { get; set; }
+        public Dates Dates { get; set; } = new Dates();
 
         [JsonPropertyName("page")]
         public int Page { get; set; }
 
         [JsonPropertyName("results")]
-        public List<Movie> Results { get; set; }
+        public List<Movie> Results { get; set; } = [];
 
         [JsonPropertyName("total_pages")]
         public int TotalPages { get; set; }
@@ -27,10 +23,10 @@ namespace onboarding_backend.Modules.Movie.Responses
     public class Dates
     {
         [JsonPropertyName("maximum")]
-        public string Maximum { get; set; }
+        public string Maximum { get; set; } = string.Empty;
 
         [JsonPropertyName("minimum")]
-        public string Minimum { get; set; }
+        public string Minimum { get; set; } = string.Empty;
     }
 
     public class Movie
@@ -39,34 +35,34 @@ namespace onboarding_backend.Modules.Movie.Responses
         public bool Adult { get; set; }
 
         [JsonPropertyName("backdrop_path")]
-        public string BackdropPath { get; set; }
+        public string BackdropPath { get; set; } = string.Empty;
 
         [JsonPropertyName("genre_ids")]
-        public List<int> GenreIds { get; set; }
+        public List<int> GenreIds { get; set; } = [];
 
         [JsonPropertyName("id")]
         public int Id { get; set; }
 
         [JsonPropertyName("original_language")]
-        public string OriginalLanguage { get; set; }
+        public string OriginalLanguage { get; set; } = string.Empty;
 
         [JsonPropertyName("original_title")]
-        public string OriginalTitle { get; set; }
+        public string OriginalTitle { get; set; } = string.Empty;
 
         [JsonPropertyName("overview")]
-        public string Overview { get; set; }
+        public string Overview { get; set; } = string.Empty;
 
         [JsonPropertyName("popularity")]
         public double Popularity { get; set; }
 
         [JsonPropertyName("poster_path")]
-        public string PosterPath { get; set; }
+        public string PosterPath { get; set; } = string.Empty;
 
         [JsonPropertyName("release_date")]
-        public string ReleaseDate { get; set; }
+        public string ReleaseDate { get; set; } = string.Empty;
 
         [JsonPropertyName("title")]
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
         [JsonPropertyName("video")]
         public bool Video { get; set; }

@@ -1,14 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using onboarding_backend.Common.Responses;
 using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Movie;
-using onboarding_backend.Interfaces;
 using onboarding_backend.Modules.Movie.Services;
 
 namespace onboarding_backend.Modules.Movie.Controllers

@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using onboarding_backend.Common.Responses;
 using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Order;
@@ -29,7 +25,8 @@ namespace onboarding_backend.Modules.Order.Services
         {
             var movie = await _orderRepository.FindOne(id);
 
-            if (movie is null) return false;
+            if (movie is null)
+                return false;
 
             await _orderRepository.Delete(id);
 
@@ -40,17 +37,17 @@ namespace onboarding_backend.Modules.Order.Services
         {
             var movie = await _orderRepository.FindOne(id);
 
-            if (movie is null) return false;
+            if (movie is null)
+                return false;
 
             await _orderRepository.Update(movie, data);
 
             return true;
         }
 
-        public async Task<IOrder> FindOne(int id)
+        public async Task<IOrder?> FindOne(int id)
         {
             return await _orderRepository.FindOne(id);
         }
-
     }
 }

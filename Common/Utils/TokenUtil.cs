@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
-using onboarding_backend.Database.Entities;
 using onboarding_backend.Interfaces;
 
 namespace onboarding_backend.Common.Utils

@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using onboarding_backend.Interfaces;
 
 namespace onboarding_backend.Dtos.Order
@@ -16,7 +12,7 @@ namespace onboarding_backend.Dtos.Order
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public PaymentMethodEnum PaymentMethod { get; set; }
 
-        public List<OrderItemCreateDto> Items { get; set; }
+        public List<OrderItemCreateDto> Items { get; set; } = new List<OrderItemCreateDto>();
 
     }
 

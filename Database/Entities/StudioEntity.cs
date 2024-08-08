@@ -1,15 +1,13 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using onboarding_backend.Interfaces;
 
 
 namespace onboarding_backend.Database.Entities
 {
-    public class Studio : Base, IStudio
+    [Table("studios")]
+    public class StudioEntity : BaseEntity, IStudio
     {
         [Required]
         public int StudioNumber { get; set; }
@@ -18,7 +16,7 @@ namespace onboarding_backend.Database.Entities
         public int SeatCapacity { get; set; }
 
         [JsonIgnore]
-        public ICollection<MovieSchedule> MovieSchedules { get; } = new List<MovieSchedule>();
+        public ICollection<MovieScheduleEntity> MovieSchedules { get; } = new List<MovieScheduleEntity>();
 
     }
 }

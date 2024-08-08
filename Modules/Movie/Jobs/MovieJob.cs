@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Coravel.Queuing.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using onboarding_backend.Database;
 using onboarding_backend.Dtos.Movie;
 using onboarding_backend.Modules.Movie.Repositories;
@@ -20,7 +14,12 @@ namespace onboarding_backend.Modules.Movie.Jobs
 
         private readonly IServiceProvider _serviceProvider;
 
-        public MovieJob(IQueue queue, MovieRepository movieRepository, ILogger<MovieJob> logger, IServiceProvider serviceProvider)
+        public MovieJob(
+            IQueue queue,
+            MovieRepository movieRepository,
+            ILogger<MovieJob> logger,
+            IServiceProvider serviceProvider
+        )
         {
             _queue = queue;
             _movieRepository = movieRepository;
@@ -32,7 +31,6 @@ namespace onboarding_backend.Modules.Movie.Jobs
         {
             foreach (var item in data.Results)
             {
-
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();

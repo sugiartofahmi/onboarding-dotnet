@@ -12,8 +12,8 @@ using onboarding_backend.Database;
 namespace onboarding_backend.Database.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240805165713_AlterTableOrderTakeOutPrice")]
-    partial class AlterTableOrderTakeOutPrice
+    [Migration("20240808075348_RenameTableMovieTags")]
+    partial class RenameTableMovieTags
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace onboarding_backend.Database.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("MovieTags", b =>
+            modelBuilder.Entity("movie_tags", b =>
                 {
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
@@ -37,7 +37,7 @@ namespace onboarding_backend.Database.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("MovieTags");
+                    b.ToTable("movie_tags");
                 });
 
             modelBuilder.Entity("onboarding_backend.Database.Entities.Movie", b =>
@@ -74,7 +74,7 @@ namespace onboarding_backend.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movies");
+                    b.ToTable("movies");
                 });
 
             modelBuilder.Entity("onboarding_backend.Database.Entities.MovieSchedule", b =>
@@ -120,7 +120,7 @@ namespace onboarding_backend.Database.Migrations
 
                     b.HasIndex("StudioId");
 
-                    b.ToTable("MovieSchedules");
+                    b.ToTable("movie_schedules");
                 });
 
             modelBuilder.Entity("onboarding_backend.Database.Entities.Order", b =>
@@ -153,7 +153,7 @@ namespace onboarding_backend.Database.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("orders");
                 });
 
             modelBuilder.Entity("onboarding_backend.Database.Entities.OrderItem", b =>
@@ -195,7 +195,7 @@ namespace onboarding_backend.Database.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("order_items");
                 });
 
             modelBuilder.Entity("onboarding_backend.Database.Entities.Studio", b =>
@@ -223,24 +223,24 @@ namespace onboarding_backend.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Studios");
+                    b.ToTable("studios");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 170, DateTimeKind.Local).AddTicks(5634),
+                            CreatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 292, DateTimeKind.Local).AddTicks(2508),
                             SeatCapacity = 10,
                             StudioNumber = 1,
-                            UpdatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 170, DateTimeKind.Local).AddTicks(5647)
+                            UpdatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 292, DateTimeKind.Local).AddTicks(2520)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 170, DateTimeKind.Local).AddTicks(5649),
+                            CreatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 292, DateTimeKind.Local).AddTicks(2522),
                             SeatCapacity = 15,
                             StudioNumber = 2,
-                            UpdatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 170, DateTimeKind.Local).AddTicks(5650)
+                            UpdatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 292, DateTimeKind.Local).AddTicks(2523)
                         });
                 });
 
@@ -267,78 +267,78 @@ namespace onboarding_backend.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags");
+                    b.ToTable("tags");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 307, DateTimeKind.Local).AddTicks(3494),
+                            CreatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 431, DateTimeKind.Local).AddTicks(1480),
                             Name = "Action",
-                            UpdatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 307, DateTimeKind.Local).AddTicks(3502)
+                            UpdatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 431, DateTimeKind.Local).AddTicks(1486)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 307, DateTimeKind.Local).AddTicks(3526),
+                            CreatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 431, DateTimeKind.Local).AddTicks(1507),
                             Name = "Comedy",
-                            UpdatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 307, DateTimeKind.Local).AddTicks(3528)
+                            UpdatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 431, DateTimeKind.Local).AddTicks(1509)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 307, DateTimeKind.Local).AddTicks(3529),
+                            CreatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 431, DateTimeKind.Local).AddTicks(1510),
                             Name = "Drama",
-                            UpdatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 307, DateTimeKind.Local).AddTicks(3530)
+                            UpdatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 431, DateTimeKind.Local).AddTicks(1511)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 307, DateTimeKind.Local).AddTicks(3532),
+                            CreatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 431, DateTimeKind.Local).AddTicks(1513),
                             Name = "Horror",
-                            UpdatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 307, DateTimeKind.Local).AddTicks(3532)
+                            UpdatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 431, DateTimeKind.Local).AddTicks(1513)
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 307, DateTimeKind.Local).AddTicks(3534),
+                            CreatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 431, DateTimeKind.Local).AddTicks(1515),
                             Name = "Romance",
-                            UpdatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 307, DateTimeKind.Local).AddTicks(3535)
+                            UpdatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 431, DateTimeKind.Local).AddTicks(1516)
                         },
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 307, DateTimeKind.Local).AddTicks(3536),
+                            CreatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 431, DateTimeKind.Local).AddTicks(1517),
                             Name = "Science Fiction",
-                            UpdatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 307, DateTimeKind.Local).AddTicks(3537)
+                            UpdatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 431, DateTimeKind.Local).AddTicks(1518)
                         },
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 307, DateTimeKind.Local).AddTicks(3538),
+                            CreatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 431, DateTimeKind.Local).AddTicks(1519),
                             Name = "Fantasy",
-                            UpdatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 307, DateTimeKind.Local).AddTicks(3539)
+                            UpdatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 431, DateTimeKind.Local).AddTicks(1520)
                         },
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 307, DateTimeKind.Local).AddTicks(3541),
+                            CreatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 431, DateTimeKind.Local).AddTicks(1521),
                             Name = "Thriller",
-                            UpdatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 307, DateTimeKind.Local).AddTicks(3542)
+                            UpdatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 431, DateTimeKind.Local).AddTicks(1522)
                         },
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 307, DateTimeKind.Local).AddTicks(3543),
+                            CreatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 431, DateTimeKind.Local).AddTicks(1523),
                             Name = "Mystery",
-                            UpdatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 307, DateTimeKind.Local).AddTicks(3544)
+                            UpdatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 431, DateTimeKind.Local).AddTicks(1524)
                         },
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 307, DateTimeKind.Local).AddTicks(3545),
+                            CreatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 431, DateTimeKind.Local).AddTicks(1525),
                             Name = "Documentary",
-                            UpdatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 307, DateTimeKind.Local).AddTicks(3546)
+                            UpdatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 431, DateTimeKind.Local).AddTicks(1526)
                         });
                 });
 
@@ -380,23 +380,23 @@ namespace onboarding_backend.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("users");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             Avatar = "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-479x512-n8sg74wg.png",
-                            CreatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 307, DateTimeKind.Local).AddTicks(3121),
+                            CreatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 431, DateTimeKind.Local).AddTicks(1052),
                             Email = "admin@admin.com",
                             IsAdmin = true,
                             Name = "Admin",
-                            Password = "$2a$11$aoVrV1Pk02uvXHbcBBFaPOmt5IMuygb75zGQVdBOaOB/TX/YDoSjm",
-                            UpdatedAt = new DateTime(2024, 8, 5, 23, 57, 13, 307, DateTimeKind.Local).AddTicks(3137)
+                            Password = "$2a$11$rhoMZsyDO5M0iXEZHDYXDeDlQSfVgCCRkpnGH/NUUuPofK/E2Ii02",
+                            UpdatedAt = new DateTime(2024, 8, 8, 14, 53, 47, 431, DateTimeKind.Local).AddTicks(1067)
                         });
                 });
 
-            modelBuilder.Entity("MovieTags", b =>
+            modelBuilder.Entity("movie_tags", b =>
                 {
                     b.HasOne("onboarding_backend.Database.Entities.Movie", null)
                         .WithMany()
@@ -444,7 +444,7 @@ namespace onboarding_backend.Database.Migrations
             modelBuilder.Entity("onboarding_backend.Database.Entities.OrderItem", b =>
                 {
                     b.HasOne("onboarding_backend.Database.Entities.MovieSchedule", "MovieSchedule")
-                        .WithMany()
+                        .WithMany("OrderItems")
                         .HasForeignKey("MovieScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -463,6 +463,11 @@ namespace onboarding_backend.Database.Migrations
             modelBuilder.Entity("onboarding_backend.Database.Entities.Movie", b =>
                 {
                     b.Navigation("Schedules");
+                });
+
+            modelBuilder.Entity("onboarding_backend.Database.Entities.MovieSchedule", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("onboarding_backend.Database.Entities.Order", b =>

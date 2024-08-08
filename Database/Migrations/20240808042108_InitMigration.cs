@@ -8,13 +8,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace onboarding_backend.Database.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class InitMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Movies",
+                name: "movies",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -29,11 +29,11 @@ namespace onboarding_backend.Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Movies", x => x.Id);
+                    table.PrimaryKey("PK_movies", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Studios",
+                name: "studios",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -46,11 +46,11 @@ namespace onboarding_backend.Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Studios", x => x.Id);
+                    table.PrimaryKey("PK_studios", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tags",
+                name: "tags",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -62,11 +62,11 @@ namespace onboarding_backend.Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tags", x => x.Id);
+                    table.PrimaryKey("PK_tags", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -82,11 +82,11 @@ namespace onboarding_backend.Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "MovieSchedules",
+                name: "movie_schedules",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -103,17 +103,17 @@ namespace onboarding_backend.Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MovieSchedules", x => x.Id);
+                    table.PrimaryKey("PK_movie_schedules", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MovieSchedules_Movies_MovieId",
+                        name: "FK_movie_schedules_movies_MovieId",
                         column: x => x.MovieId,
-                        principalTable: "Movies",
+                        principalTable: "movies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MovieSchedules_Studios_StudioId",
+                        name: "FK_movie_schedules_studios_StudioId",
                         column: x => x.StudioId,
-                        principalTable: "Studios",
+                        principalTable: "studios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -129,21 +129,21 @@ namespace onboarding_backend.Database.Migrations
                 {
                     table.PrimaryKey("PK_MovieTags", x => new { x.MovieId, x.TagId });
                     table.ForeignKey(
-                        name: "FK_MovieTags_Movies_MovieId",
+                        name: "FK_MovieTags_movies_MovieId",
                         column: x => x.MovieId,
-                        principalTable: "Movies",
+                        principalTable: "movies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MovieTags_Tags_TagId",
+                        name: "FK_MovieTags_tags_TagId",
                         column: x => x.TagId,
-                        principalTable: "Tags",
+                        principalTable: "tags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "orders",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -157,17 +157,17 @@ namespace onboarding_backend.Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.PrimaryKey("PK_orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_Users_UserId",
+                        name: "FK_orders_users_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
+                        principalTable: "users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderItems",
+                name: "order_items",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -175,7 +175,6 @@ namespace onboarding_backend.Database.Migrations
                     OrderId = table.Column<int>(type: "int", nullable: false),
                     MovieScheduleId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false),
                     SubTotalPrice = table.Column<double>(type: "float", nullable: false),
                     Snapshots = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -184,60 +183,60 @@ namespace onboarding_backend.Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderItems", x => x.Id);
+                    table.PrimaryKey("PK_order_items", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderItems_MovieSchedules_MovieScheduleId",
+                        name: "FK_order_items_movie_schedules_MovieScheduleId",
                         column: x => x.MovieScheduleId,
-                        principalTable: "MovieSchedules",
+                        principalTable: "movie_schedules",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderItems_Orders_OrderId",
+                        name: "FK_order_items_orders_OrderId",
                         column: x => x.OrderId,
-                        principalTable: "Orders",
+                        principalTable: "orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "Studios",
+                table: "studios",
                 columns: new[] { "Id", "CreatedAt", "DeletedAt", "SeatCapacity", "StudioNumber", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 5, 20, 49, 45, 705, DateTimeKind.Local).AddTicks(6363), null, 10, 1, new DateTime(2024, 8, 5, 20, 49, 45, 705, DateTimeKind.Local).AddTicks(6377) },
-                    { 2, new DateTime(2024, 8, 5, 20, 49, 45, 705, DateTimeKind.Local).AddTicks(6379), null, 15, 2, new DateTime(2024, 8, 5, 20, 49, 45, 705, DateTimeKind.Local).AddTicks(6380) }
+                    { 1, new DateTime(2024, 8, 8, 11, 21, 8, 323, DateTimeKind.Local).AddTicks(1472), null, 10, 1, new DateTime(2024, 8, 8, 11, 21, 8, 323, DateTimeKind.Local).AddTicks(1484) },
+                    { 2, new DateTime(2024, 8, 8, 11, 21, 8, 323, DateTimeKind.Local).AddTicks(1485), null, 15, 2, new DateTime(2024, 8, 8, 11, 21, 8, 323, DateTimeKind.Local).AddTicks(1486) }
                 });
 
             migrationBuilder.InsertData(
-                table: "Tags",
+                table: "tags",
                 columns: new[] { "Id", "CreatedAt", "DeletedAt", "Name", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1423), null, "Action", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1433) },
-                    { 2, new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1459), null, "Comedy", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1461) },
-                    { 3, new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1462), null, "Drama", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1463) },
-                    { 4, new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1465), null, "Horror", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1465) },
-                    { 5, new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1467), null, "Romance", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1467) },
-                    { 6, new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1469), null, "Science Fiction", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1470) },
-                    { 7, new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1471), null, "Fantasy", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1472) },
-                    { 8, new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1473), null, "Thriller", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1474) },
-                    { 9, new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1475), null, "Mystery", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1476) },
-                    { 10, new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1477), null, "Documentary", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1478) }
+                    { 1, new DateTime(2024, 8, 8, 11, 21, 8, 477, DateTimeKind.Local).AddTicks(64), null, "Action", new DateTime(2024, 8, 8, 11, 21, 8, 477, DateTimeKind.Local).AddTicks(73) },
+                    { 2, new DateTime(2024, 8, 8, 11, 21, 8, 477, DateTimeKind.Local).AddTicks(91), null, "Comedy", new DateTime(2024, 8, 8, 11, 21, 8, 477, DateTimeKind.Local).AddTicks(92) },
+                    { 3, new DateTime(2024, 8, 8, 11, 21, 8, 477, DateTimeKind.Local).AddTicks(93), null, "Drama", new DateTime(2024, 8, 8, 11, 21, 8, 477, DateTimeKind.Local).AddTicks(94) },
+                    { 4, new DateTime(2024, 8, 8, 11, 21, 8, 477, DateTimeKind.Local).AddTicks(96), null, "Horror", new DateTime(2024, 8, 8, 11, 21, 8, 477, DateTimeKind.Local).AddTicks(97) },
+                    { 5, new DateTime(2024, 8, 8, 11, 21, 8, 477, DateTimeKind.Local).AddTicks(98), null, "Romance", new DateTime(2024, 8, 8, 11, 21, 8, 477, DateTimeKind.Local).AddTicks(99) },
+                    { 6, new DateTime(2024, 8, 8, 11, 21, 8, 477, DateTimeKind.Local).AddTicks(100), null, "Science Fiction", new DateTime(2024, 8, 8, 11, 21, 8, 477, DateTimeKind.Local).AddTicks(101) },
+                    { 7, new DateTime(2024, 8, 8, 11, 21, 8, 477, DateTimeKind.Local).AddTicks(102), null, "Fantasy", new DateTime(2024, 8, 8, 11, 21, 8, 477, DateTimeKind.Local).AddTicks(103) },
+                    { 8, new DateTime(2024, 8, 8, 11, 21, 8, 477, DateTimeKind.Local).AddTicks(104), null, "Thriller", new DateTime(2024, 8, 8, 11, 21, 8, 477, DateTimeKind.Local).AddTicks(105) },
+                    { 9, new DateTime(2024, 8, 8, 11, 21, 8, 477, DateTimeKind.Local).AddTicks(106), null, "Mystery", new DateTime(2024, 8, 8, 11, 21, 8, 477, DateTimeKind.Local).AddTicks(107) },
+                    { 10, new DateTime(2024, 8, 8, 11, 21, 8, 477, DateTimeKind.Local).AddTicks(108), null, "Documentary", new DateTime(2024, 8, 8, 11, 21, 8, 477, DateTimeKind.Local).AddTicks(109) }
                 });
 
             migrationBuilder.InsertData(
-                table: "Users",
+                table: "users",
                 columns: new[] { "Id", "Avatar", "CreatedAt", "DeletedAt", "Email", "IsAdmin", "Name", "Password", "UpdatedAt" },
-                values: new object[] { 1, "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-479x512-n8sg74wg.png", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(999), null, "admin@admin.com", true, "Admin", "$2a$11$SDIs45P/wDS5Hlmri8CzXel.PgTzFD0PP9UdDrBJWwfLn5gJ0.r5u", new DateTime(2024, 8, 5, 20, 49, 45, 845, DateTimeKind.Local).AddTicks(1014) });
+                values: new object[] { 1, "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-479x512-n8sg74wg.png", new DateTime(2024, 8, 8, 11, 21, 8, 476, DateTimeKind.Local).AddTicks(9782), null, "admin@admin.com", true, "Admin", "$2a$11$DEff0XY20L.vWYpbAEg.H.2SKI985HaoxSmkfB57Ya062Ry.cXksa", new DateTime(2024, 8, 8, 11, 21, 8, 476, DateTimeKind.Local).AddTicks(9801) });
 
             migrationBuilder.CreateIndex(
-                name: "IX_MovieSchedules_MovieId",
-                table: "MovieSchedules",
+                name: "IX_movie_schedules_MovieId",
+                table: "movie_schedules",
                 column: "MovieId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MovieSchedules_StudioId",
-                table: "MovieSchedules",
+                name: "IX_movie_schedules_StudioId",
+                table: "movie_schedules",
                 column: "StudioId");
 
             migrationBuilder.CreateIndex(
@@ -246,18 +245,18 @@ namespace onboarding_backend.Database.Migrations
                 column: "TagId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_MovieScheduleId",
-                table: "OrderItems",
+                name: "IX_order_items_MovieScheduleId",
+                table: "order_items",
                 column: "MovieScheduleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderItems_OrderId",
-                table: "OrderItems",
+                name: "IX_order_items_OrderId",
+                table: "order_items",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_UserId",
-                table: "Orders",
+                name: "IX_orders_UserId",
+                table: "orders",
                 column: "UserId");
         }
 
@@ -268,25 +267,25 @@ namespace onboarding_backend.Database.Migrations
                 name: "MovieTags");
 
             migrationBuilder.DropTable(
-                name: "OrderItems");
+                name: "order_items");
 
             migrationBuilder.DropTable(
-                name: "Tags");
+                name: "tags");
 
             migrationBuilder.DropTable(
-                name: "MovieSchedules");
+                name: "movie_schedules");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "orders");
 
             migrationBuilder.DropTable(
-                name: "Movies");
+                name: "movies");
 
             migrationBuilder.DropTable(
-                name: "Studios");
+                name: "studios");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "users");
         }
     }
 }

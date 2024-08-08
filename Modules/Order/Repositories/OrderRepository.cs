@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using onboarding_backend.Common.Responses;
 using onboarding_backend.Database;
 using onboarding_backend.Database.Entities;
 using onboarding_backend.Dtos.Common;
 using onboarding_backend.Dtos.Order;
-using onboarding_backend.Dtos.Tag;
 using onboarding_backend.Interfaces;
 using onboarding_backend.Modules.Order.Responses;
 
@@ -18,34 +14,30 @@ namespace onboarding_backend.Modules.Order.Repositories
     {
         private readonly IHttpContextAccessor _httpContextAccessor = _httpContextAccessor;
         private readonly AppDbContext _context = context;
+
         public async Task<PaginateResponse<OrderIndexResponse>> Pagination(IndexDto request)
         {
+            var httpContext = _httpContextAccessor.HttpContext;
             var query = _context.Orders.Include(i => i.User).Include(i => i.Items).AsQueryable();
             var totalItems = await query.CountAsync();
             var totalPages = (int)Math.Ceiling(totalItems / (double)request.PerPage);
             var items = await query
-       .Skip((request.Page - 1) * request.PerPage)
-       .Take(request.PerPage)
-       .ToListAsync();
-            var httpContext = _httpContextAccessor.HttpContext;
-            var baseUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}{httpContext.Request.PathBase}{httpContext.Request.Path}";
+                .Skip((request.Page - 1) * request.PerPage)
+                .Take(request.PerPage)
+                .ToListAsync();
+            string baseUrl =
+                $"{httpContext?.Request.Scheme}://{httpContext?.Request.Host}{httpContext?.Request.PathBase}{httpContext?.Request.Path}";
 
             return new PaginateResponse<OrderIndexResponse>
             {
                 Items = OrderIndexResponse.FromEntities(items),
-                Pagination = new PaginationMeta
-                {
-                    Page = request.Page,
-                    PerPage = request.PerPage,
-                    TotalItems = totalItems,
-                    TotalPages = totalPages,
-                    NextPageLink = request.Page < totalPages
-                    ? $"{baseUrl}?Page={request.Page + 1}&PerPage={request.PerPage}"
-                    : null,
-                    PreviousPageLink = request.Page > 1
-                    ? $"{baseUrl}?Page={request.Page - 1}&PerPage={request.PerPage}"
-                    : null
-                }
+                Pagination = new PaginationMeta(
+                    page: request.Page,
+                    perPage: request.PerPage,
+                    totalItems: totalItems,
+                    totalPages: totalPages,
+                    baseUrl: baseUrl
+                )
             };
         }
 
@@ -59,7 +51,7 @@ namespace onboarding_backend.Modules.Order.Repositories
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
             {
-                var order = new Database.Entities.Order
+                var order = new OrderEntity
                 {
                     UserId = userId,
                     PaymentMethod = data.PaymentMethod,
@@ -73,16 +65,20 @@ namespace onboarding_backend.Modules.Order.Repositories
 
                 foreach (var item in data.Items)
                 {
-                    var movieSchedule = await _context.MovieSchedules
-                        .FirstOrDefaultAsync(x => x.Id == item.MovieScheduleId);
+                    var movieSchedule = await _context.MovieSchedules.FirstOrDefaultAsync(x =>
+                        x.Id == item.MovieScheduleId
+                    );
 
                     if (movieSchedule == null)
                     {
-                        throw new Exception($"MovieSchedule with ID {item.MovieScheduleId} not found.");
+                        throw new Exception(
+                            $"MovieSchedule with ID {item.MovieScheduleId} not found."
+                        );
                     }
 
                     double subTotalPrice = movieSchedule.Price * item.Quantity;
-                    var orderItem = new OrderItem
+
+                    var orderItem = new OrderItemEntity
                     {
                         OrderId = order.Id,
                         MovieScheduleId = item.MovieScheduleId,
@@ -102,25 +98,21 @@ namespace onboarding_backend.Modules.Order.Repositories
             catch (Exception)
             {
                 await transaction.RollbackAsync();
-                throw;
+                throw new Exception("Failed to create order.");
             }
-
         }
 
         public async Task Update(IOrder order, OrderUpdateDto data)
         {
             order.PaymentMethod = data.PaymentMethod;
 
-
             _context.Entry(order).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-
         }
 
         public async Task Delete(int id)
         {
             await _context.Orders.Where(x => x.Id == id).ExecuteDeleteAsync();
         }
-
     }
 }
