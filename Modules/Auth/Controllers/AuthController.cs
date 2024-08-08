@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using onboarding_backend.Common.Responses;
 using onboarding_backend.Common.Utils;
 using onboarding_backend.Dtos.Auth;
-using onboarding_backend.Interfaces;
 using onboarding_backend.Modules.Auth.Responses;
 using onboarding_backend.Modules.Auth.Services;
 

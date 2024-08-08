@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using onboarding_backend.Common.Interfaces;
-using onboarding_backend.Common.Requests;
 using onboarding_backend.Common.Responses;
 using onboarding_backend.Database;
 using onboarding_backend.Dtos.Common;
@@ -35,16 +29,6 @@ namespace onboarding_backend.Modules.Movie.Repositories
            .Skip((request.Page - 1) * request.PerPage)
            .Take(request.PerPage)
            .ToListAsync();
-
-            // foreach (var movie in items)
-            // {
-            //     foreach (var schedule in movie.Schedules)
-            //     {
-            //         int totalSeats = schedule.Studio.SeatCapacity;
-            //         int bookedSeats = schedule.OrderItems.Sum(x => x.Quantity);
-            //         // schedule.SeatRemaining = totalSeats - bookedSeats;
-            //     }
-            // }
 
             var httpContext = _httpContextAccessor.HttpContext;
             var baseUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}{httpContext.Request.PathBase}{httpContext.Request.Path}";

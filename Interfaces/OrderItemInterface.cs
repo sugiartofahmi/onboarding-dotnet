@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
 using onboarding_backend.Database.Entities;
 
 namespace onboarding_backend.Interfaces

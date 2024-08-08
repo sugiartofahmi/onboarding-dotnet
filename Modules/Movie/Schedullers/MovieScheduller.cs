@@ -1,12 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Headers;
 using System.Text.Json;
-using System.Threading.Tasks;
-using Microsoft.OpenApi.Any;
 using onboarding_backend.Modules.Movie.Jobs;
-using onboarding_backend.Modules.Movie.Repositories;
 using onboarding_backend.Modules.Movie.Responses;
 
 namespace onboarding_backend.Modules.Movie.Schedullers

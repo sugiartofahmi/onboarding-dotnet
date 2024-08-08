@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Coravel.Queuing.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using onboarding_backend.Database;
 using onboarding_backend.Dtos.Movie;
 using onboarding_backend.Modules.Movie.Repositories;

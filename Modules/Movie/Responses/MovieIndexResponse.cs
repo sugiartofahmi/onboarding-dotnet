@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using onboarding_backend.Database.Entities;
 using onboarding_backend.Interfaces;
 using onboarding_backend.Modules.Schedule.Responses;
